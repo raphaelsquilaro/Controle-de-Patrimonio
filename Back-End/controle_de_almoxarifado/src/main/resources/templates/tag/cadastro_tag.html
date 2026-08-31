@@ -1,99 +1,246 @@
 <!DOCTYPE html>
-<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<html lang="pt-BR"
+      xmlns:th="http://www.thymeleaf.org">
+
 <head>
 
     <meta charset="UTF-8">
 
-    <title>Cadastro de Tag RFID</title>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
-    <style>
+    <title
+            th:text="${tagRFID.id == null ? 'Cadastrar Tag RFID' : 'Editar Tag RFID'}">
+        Cadastrar Tag RFID
+    </title>
 
-        body{
-
-            font-family:Arial;
-            background:#f4f4f4;
-            padding:40px;
-
-        }
-
-        .container{
-
-            width:600px;
-            margin:auto;
-            background:white;
-            padding:25px;
-            border-radius:10px;
-
-        }
-
-        input,select{
-
-            width:100%;
-            padding:10px;
-            margin-top:10px;
-
-        }
-
-        button{
-
-            margin-top:20px;
-            width:100%;
-            padding:12px;
-            background:green;
-            color:white;
-            border:none;
-
-        }
-
-    </style>
+    <link rel="stylesheet"
+          th:href="@{/cadastro-tag.css}">
 
 </head>
+
 <body>
 
 <div class="container">
 
-    <h2>Cadastro de Tag RFID</h2>
+    <div class="card">
 
-    <form th:action="@{/tag/salvar}"
-          th:object="${tagRFID}"
-          method="post">
+        <!-- =========================
+             CABEÇALHO
+             ========================= -->
 
-        <label>Código da Tag</label>
+        <div class="card-header">
 
-        <input type="text"
-               th:field="*{codigoTag}">
+            <div class="icon">
+                🏷️
+            </div>
 
-        <label>Produto</label>
+            <div>
 
-        <select th:field="*{produto}">
+                <h1
+                        th:text="${tagRFID.id == null
+                        ? 'Cadastrar Tag RFID'
+                        : 'Editar Tag RFID'}">
 
-            <option
-                    th:each="produto : ${produtos}"
-                    th:value="${produto.id}"
-                    th:text="${produto.nome}">
-            </option>
+                    Cadastrar Tag RFID
 
-        </select>
+                </h1>
 
-        <label>Tag Ativa?</label>
+                <p>
+                    Cadastre uma Tag RFID e associe-a a um produto.
+                </p>
 
-        <select th:field="*{ativo}">
+            </div>
 
-            <option value="true">Sim</option>
+        </div>
 
-            <option value="false">Não</option>
 
-        </select>
+        <!-- =========================
+             FORMULÁRIO
+             ========================= -->
 
-        <button>
+        <form
+                th:action="@{/tag/salvar}"
+                th:object="${tagRFID}"
+                method="post">
 
-            Salvar
 
-        </button>
+            <!-- ID -->
 
-    </form>
+            <input
+                    type="hidden"
+                    th:field="*{id}">
+
+
+            <!-- =========================
+                 CÓDIGO DA TAG
+                 ========================= -->
+
+            <div class="form-group">
+
+                <label for="codigoTag">
+                    Código da Tag
+                </label>
+
+                <input
+                        type="text"
+                        id="codigoTag"
+                        th:field="*{codigoTag}"
+                        placeholder="Ex: E2000017221101441890ABCD"
+                        required
+                >
+
+                <small class="help-text">
+                    Informe o código único gravado na Tag RFID.
+                </small>
+
+                <span
+                        class="error"
+                        th:if="${#fields.hasErrors('codigoTag')}"
+                        th:errors="*{codigoTag}">
+                </span>
+
+            </div>
+
+
+            <!-- =========================
+                 PRODUTO
+                 ========================= -->
+
+            <div class="form-group">
+
+                <label for="produto">
+                    Produto associado
+                </label>
+
+                <select
+                        id="produto"
+                        th:field="*{produto}"
+                        required>
+
+                    <option value="">
+                        Selecione um produto
+                    </option>
+
+                    <option
+                            th:each="produto : ${produtos}"
+                            th:value="${produto.id}"
+                            th:text="${produto.nome}">
+                    </option>
+
+                </select>
+
+                <small class="help-text">
+                    Selecione o produto que utilizará esta Tag RFID.
+                </small>
+
+                <span
+                        class="error"
+                        th:if="${#fields.hasErrors('produto')}"
+                        th:errors="*{produto}">
+                </span>
+
+            </div>
+
+
+            <!-- =========================
+                 STATUS
+                 ========================= -->
+
+            <div class="form-group">
+
+                <label for="ativo">
+                    Status da Tag
+                </label>
+
+                <select
+                        id="ativo"
+                        th:field="*{ativo}"
+                        required>
+
+                    <option value="">
+                        Selecione o status
+                    </option>
+
+                    <option value="true">
+                        Ativa
+                    </option>
+
+                    <option value="false">
+                        Inativa
+                    </option>
+
+                </select>
+
+                <small class="help-text">
+                    Tags inativas não devem ser utilizadas para identificação.
+                </small>
+
+                <span
+                        class="error"
+                        th:if="${#fields.hasErrors('ativo')}"
+                        th:errors="*{ativo}">
+                </span>
+
+            </div>
+
+
+            <!-- =========================
+                 INFORMAÇÃO
+                 ========================= -->
+
+            <div class="info-box">
+
+                <div class="info-icon">
+                    RFID
+                </div>
+
+                <div>
+
+                    <strong>
+                        Associação da Tag
+                    </strong>
+
+                    <p>
+                        Cada Tag RFID deve estar associada a um único produto.
+                        Verifique o código antes de salvar.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 BOTÕES
+                 ========================= -->
+
+            <div class="form-actions">
+
+                <a
+                        th:href="@{/tag/listar}"
+                        class="btn btn-cancelar">
+
+                    Cancelar
+
+                </a>
+
+                <button
+                        type="submit"
+                        class="btn btn-salvar">
+
+                    Salvar Tag
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
 
 </div>
 
 </body>
+
 </html>

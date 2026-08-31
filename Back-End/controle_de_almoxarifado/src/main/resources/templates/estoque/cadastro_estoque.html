@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Cadastro de Estoque</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            padding: 40px;
+        }
+
+        .container {
+            width: 600px;
+            max-width: 90%;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        h2 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+            color: #444;
+        }
+
+        input,
+        select {
+            box-sizing: border-box;
+            width: 100%;
+            padding: 10px;
+            margin-top: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            background: #3949AB;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: #303F9F;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- Título dinâmico para Cadastro ou Edição -->
+    <h2 th:text="${estoque.id != null} ? 'Editar Estoque' : 'Cadastro de Estoque'">Cadastro de Estoque</h2>
+
+    <form th:action="@{/estoque/salvar}" th:object="${estoque}" method="post">
+
+        <!-- CAMPO OBRIGATÓRIO PARA A ALTERAÇÃO FUNCIONAR -->
+        <input type="hidden" th:field="*{id}" />
+
+        <label for="quantidade">Quantidade</label>
+        <input id="quantidade" type="number" min="0" max="99" step="1" th:field="*{quantidade}" required>
+
+        <label for="produto">Produto</label>
+        <select id="produto" th:field="*{produto.id}" required>
+            <option value="" disabled th:selected="${estoque.produto == null || estoque.produto.id == null}">
+                Selecione um produto
+            </option>
+            <option th:each="produto : ${produtos}"
+                    th:value="${produto.id}"
+                    th:text="${produto.nome}">
+            </option>
+        </select>
+
+        <button type="submit">Salvar Estoque</button>
+    </form>
+
+</div>
+
+</body>
+</html>

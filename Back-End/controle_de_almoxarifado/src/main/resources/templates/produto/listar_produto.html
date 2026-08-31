@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="pt-BR"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Produtos</title>
+
+    <link rel="stylesheet"
+          th:href="@{/listar-produto.css}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- =========================
+         CABEÇALHO
+         ========================= -->
+
+    <header class="page-header">
+
+        <div class="header-info">
+
+            <div class="icon">
+                📦
+            </div>
+
+            <div>
+
+                <h1>
+                    Produtos
+                </h1>
+
+                <p>
+                    Gerencie os produtos cadastrados no almoxarifado.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <a th:href="@{/produto/form-cadastro}"
+           class="btn btn-primary">
+
+            <span class="plus">
+                +
+            </span>
+
+            Novo produto
+
+        </a>
+
+    </header>
+
+
+    <!-- =========================
+         MENSAGEM
+         ========================= -->
+
+    <div
+            th:if="${mensagem}"
+            class="alert">
+
+        <span th:text="${mensagem}">
+            Mensagem
+        </span>
+
+    </div>
+
+
+    <!-- =========================
+         CONTEÚDO
+         ========================= -->
+
+    <main class="content">
+
+
+        <!-- =========================
+             TABELA
+             ========================= -->
+
+        <div
+                th:if="${not #lists.isEmpty(produtos)}"
+                class="table-container">
+
+            <table>
+
+                <thead>
+
+                <tr>
+
+                    <th>ID</th>
+
+                    <th>Produto</th>
+
+                    <th>Categoria</th>
+
+                    <th>Descrição</th>
+
+                    <th>Status</th>
+
+                    <th class="actions-column">
+                        Ações
+                    </th>
+
+                </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                <tr th:each="produto : ${produtos}">
+
+
+                    <!-- ID -->
+
+                    <td>
+
+                        <span
+                                class="id"
+                                th:text="'#' + ${produto.id}">
+
+                            #1
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- PRODUTO -->
+
+                    <td>
+
+                        <div class="product-name">
+
+                            <div class="product-icon">
+                                📦
+                            </div>
+
+                            <div>
+
+                                <span
+                                        class="name"
+                                        th:text="${produto.nome}">
+
+                                    Produto
+
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </td>
+
+
+                    <!-- CATEGORIA -->
+
+                    <td>
+
+                        <span
+                                class="category"
+                                th:text="${produto.categoria}">
+
+                            Categoria
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- DESCRIÇÃO -->
+
+                    <td>
+
+                        <span
+                                class="description"
+                                th:text="${produto.descricao != null and !produto.descricao.isEmpty()
+                                      ? produto.descricao
+                                      : 'Sem descrição'}">
+
+                            Sem descrição
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- STATUS -->
+
+                    <td>
+
+                        <span
+                                th:if="${produto.status != null}"
+                                class="status"
+                                th:classappend="${produto.status.name() == 'ATIVO'}
+                                ? ' status-ativo'
+                                : ' status-inativo'">
+
+                            <span class="status-dot"></span>
+
+                            <span th:text="${produto.status}">
+                                ATIVO
+                            </span>
+
+                        </span>
+
+
+                        <span
+                                th:unless="${produto.status != null}"
+                                class="status status-indefinido">
+
+                            <span class="status-dot"></span>
+
+                            Não informado
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- AÇÕES -->
+
+                    <td>
+
+                        <div class="actions">
+
+                            <a
+                                    th:href="@{/produto/editar/{id}(id=${produto.id})}"
+                                    class="action edit">
+
+                                Editar
+
+                            </a>
+
+
+                            <a
+                                    th:href="@{/produto/excluir/{id}(id=${produto.id})}"
+                                    class="action delete"
+                                    onclick="return confirm('Tem certeza que deseja excluir este produto?');">
+
+                                Excluir
+
+                            </a>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <!-- =========================
+             ESTADO VAZIO
+             ========================= -->
+
+        <div
+                th:if="${#lists.isEmpty(produtos)}"
+                class="empty-state">
+
+            <div class="empty-icon">
+                📦
+            </div>
+
+            <h2>
+                Nenhum produto cadastrado
+            </h2>
+
+            <p>
+                Ainda não existem produtos cadastrados no almoxarifado.
+            </p>
+
+            <a
+                    th:href="@{/produto/form-cadastro}"
+                    class="btn btn-primary">
+
+                Cadastrar primeiro produto
+
+            </a>
+
+        </div>
+
+    </main>
+
+
+    <!-- =========================
+         RODAPÉ
+         ========================= -->
+
+    <footer>
+
+        <span>
+            Sistema de Controle de Almoxarifado
+        </span>
+
+        <span>
+            Produtos
+        </span>
+
+    </footer>
+
+</div>
+
+</body>
+
+</html>

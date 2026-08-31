@@ -1,0 +1,507 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+
+    background: #f4f6f8;
+
+    color: #1f2937;
+
+    min-height: 100vh;
+}
+
+
+/* =========================
+   CONTAINER
+   ========================= */
+
+.container {
+    width: 100%;
+
+    min-height: 100vh;
+
+    padding: 35px 50px;
+
+    display: flex;
+
+    flex-direction: column;
+}
+
+
+/* =========================
+   CABEÇALHO
+   ========================= */
+
+.page-header {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 30px;
+}
+
+.header-info {
+    display: flex;
+
+    align-items: center;
+
+    gap: 16px;
+}
+
+.icon {
+    width: 58px;
+    height: 58px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: #e8f0ff;
+
+    border-radius: 12px;
+
+    font-size: 29px;
+}
+
+.header-info h1 {
+    font-size: 28px;
+
+    color: #111827;
+
+    margin-bottom: 5px;
+}
+
+.header-info p {
+    color: #6b7280;
+
+    font-size: 14px;
+}
+
+
+/* =========================
+   ALERTA
+   ========================= */
+
+.alert {
+    width: 100%;
+
+    padding: 14px 18px;
+
+    margin-bottom: 20px;
+
+    background: #ecfdf5;
+
+    border: 1px solid #a7f3d0;
+
+    border-radius: 8px;
+
+    color: #065f46;
+
+    font-size: 14px;
+}
+
+
+/* =========================
+   TABELA
+   ========================= */
+
+.content {
+    width: 100%;
+}
+
+.table-container {
+    width: 100%;
+
+    background: #ffffff;
+
+    border-radius: 12px;
+
+    overflow-x: auto;
+
+    border: 1px solid #e5e7eb;
+
+    box-shadow:
+            0 5px 20px rgba(0, 0, 0, 0.06);
+}
+
+table {
+    width: 100%;
+
+    min-width: 1050px;
+
+    border-collapse: collapse;
+}
+
+thead {
+    background: #f8fafc;
+}
+
+th {
+    height: 55px;
+
+    padding: 0 20px;
+
+    text-align: left;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.04em;
+
+    color: #64748b;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+td {
+    height: 72px;
+
+    padding: 10px 20px;
+
+    font-size: 14px;
+
+    border-bottom: 1px solid #f1f5f9;
+
+    vertical-align: middle;
+}
+
+tbody tr {
+    transition: 0.15s;
+}
+
+tbody tr:hover {
+    background: #f8fafc;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* =========================
+   ID
+   ========================= */
+
+.id {
+    color: #64748b;
+
+    font-size: 13px;
+
+    font-weight: 600;
+}
+
+
+/* =========================
+   TIPO DE MOVIMENTAÇÃO
+   ========================= */
+
+.movement {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    padding: 7px 11px;
+
+    border-radius: 20px;
+
+    font-size: 12px;
+
+    font-weight: 700;
+}
+
+.movement-icon {
+    font-size: 15px;
+
+    font-weight: bold;
+}
+
+
+/* ENTRADA */
+
+.movement-entry {
+    background: #ecfdf5;
+
+    color: #047857;
+}
+
+
+/* SAÍDA */
+
+.movement-exit {
+    background: #fef2f2;
+
+    color: #b91c1c;
+}
+
+
+/* OUTROS */
+
+.movement-other {
+    background: #f1f5f9;
+
+    color: #475569;
+}
+
+
+/* =========================
+   PRODUTO
+   ========================= */
+
+.product {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    font-weight: 600;
+
+    color: #374151;
+}
+
+.product-icon {
+    width: 36px;
+    height: 36px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: #f1f5f9;
+
+    border-radius: 7px;
+
+    font-size: 17px;
+
+    flex-shrink: 0;
+}
+
+
+/* =========================
+   QUANTIDADE
+   ========================= */
+
+.quantity {
+    font-size: 15px;
+
+    font-weight: 700;
+}
+
+.quantity-entry {
+    color: #059669;
+}
+
+.quantity-exit {
+    color: #dc2626;
+}
+
+
+/* =========================
+   USUÁRIO
+   ========================= */
+
+.user {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    font-weight: 600;
+
+    color: #374151;
+}
+
+.avatar {
+    width: 36px;
+    height: 36px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: #dbeafe;
+
+    color: #1d4ed8;
+
+    border-radius: 50%;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    flex-shrink: 0;
+}
+
+
+/* =========================
+   DATA E HORA
+   ========================= */
+
+.datetime {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 3px;
+}
+
+.date {
+    color: #374151;
+
+    font-size: 13px;
+
+    font-weight: 600;
+}
+
+.time {
+    color: #94a3b8;
+
+    font-size: 12px;
+}
+
+
+/* =========================
+   NÃO ENCONTRADO
+   ========================= */
+
+.not-found {
+    color: #9ca3af;
+
+    font-size: 12px;
+
+    font-style: italic;
+}
+
+
+/* =========================
+   ESTADO VAZIO
+   ========================= */
+
+.empty-state {
+    width: 100%;
+
+    min-height: 350px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 12px;
+
+    box-shadow:
+            0 5px 20px rgba(0, 0, 0, 0.05);
+
+    text-align: center;
+}
+
+.empty-icon {
+    width: 70px;
+    height: 70px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: #eff6ff;
+
+    border-radius: 50%;
+
+    font-size: 32px;
+
+    margin-bottom: 20px;
+}
+
+.empty-state h2 {
+    font-size: 20px;
+
+    color: #1f2937;
+
+    margin-bottom: 8px;
+}
+
+.empty-state p {
+    color: #6b7280;
+
+    font-size: 14px;
+}
+
+
+/* =========================
+   RODAPÉ
+   ========================= */
+
+footer {
+    margin-top: auto;
+
+    padding-top: 30px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    color: #94a3b8;
+
+    font-size: 12px;
+}
+
+
+/* =========================
+   RESPONSIVIDADE
+   ========================= */
+
+@media (max-width: 900px) {
+
+    .container {
+        padding: 25px;
+    }
+
+    .table-container {
+        overflow-x: auto;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .container {
+        padding: 20px 15px;
+    }
+
+    .header-info h1 {
+        font-size: 23px;
+    }
+
+    footer {
+        flex-direction: column;
+
+        gap: 8px;
+
+        text-align: center;
+    }
+
+}

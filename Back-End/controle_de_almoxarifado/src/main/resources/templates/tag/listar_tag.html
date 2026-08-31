@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="pt-BR"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Tags RFID</title>
+
+    <link rel="stylesheet"
+          th:href="@{/listar-tag.css}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- =========================
+         CABEÇALHO
+         ========================= -->
+
+    <header class="page-header">
+
+        <div class="header-info">
+
+            <div class="icon">
+                🏷️
+            </div>
+
+            <div>
+
+                <h1>
+                    Tags RFID
+                </h1>
+
+                <p>
+                    Gerencie as Tags RFID associadas aos produtos.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <a
+                th:href="@{/tag/form-cadastro}"
+                class="btn btn-primary">
+
+            <span class="plus">
+                +
+            </span>
+
+            Nova Tag
+
+        </a>
+
+    </header>
+
+
+    <!-- =========================
+         MENSAGEM
+         ========================= -->
+
+    <div
+            th:if="${mensagem}"
+            class="alert">
+
+        <span th:text="${mensagem}">
+            Mensagem
+        </span>
+
+    </div>
+
+
+    <!-- =========================
+         CONTEÚDO
+         ========================= -->
+
+    <main class="content">
+
+
+        <!-- =========================
+             TABELA
+             ========================= -->
+
+        <div
+                th:if="${not #lists.isEmpty(tags)}"
+                class="table-container">
+
+            <table>
+
+                <thead>
+
+                <tr>
+
+                    <th>
+                        ID
+                    </th>
+
+                    <th>
+                        Código da Tag
+                    </th>
+
+                    <th>
+                        Produto
+                    </th>
+
+                    <th>
+                        Status
+                    </th>
+
+                    <th class="actions-column">
+                        Ações
+                    </th>
+
+                </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                <tr th:each="tag : ${tags}">
+
+
+                    <!-- =========================
+                         ID
+                         ========================= -->
+
+                    <td>
+
+                        <span
+                                class="id"
+                                th:text="'#' + ${tag.id}">
+
+                            #1
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- =========================
+                         CÓDIGO DA TAG
+                         ========================= -->
+
+                    <td>
+
+                        <div class="tag-code">
+
+                            <div class="tag-icon">
+                                🏷️
+                            </div>
+
+                            <span
+                                    th:text="${tag.codigoTag}">
+
+                                E2000017221101441890ABCD
+
+                            </span>
+
+                        </div>
+
+                    </td>
+
+
+                    <!-- =========================
+                         PRODUTO
+                         ========================= -->
+
+                    <td>
+
+                        <div
+                                th:if="${tag.produto != null}"
+                                class="product">
+
+                            <div class="product-icon">
+                                📦
+                            </div>
+
+                            <span
+                                    th:text="${tag.produto.nome}">
+
+                                Produto
+
+                            </span>
+
+                        </div>
+
+
+                        <span
+                                th:unless="${tag.produto != null}"
+                                class="no-product">
+
+                            Sem produto associado
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- =========================
+                         STATUS
+                         ========================= -->
+
+                    <td>
+
+                        <span
+                                th:if="${tag.ativo}"
+                                class="status status-active">
+
+                            <span class="status-dot"></span>
+
+                            Ativa
+
+                        </span>
+
+
+                        <span
+                                th:unless="${tag.ativo}"
+                                class="status status-inactive">
+
+                            <span class="status-dot"></span>
+
+                            Inativa
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- =========================
+                         AÇÕES
+                         ========================= -->
+
+                    <td>
+
+                        <div class="actions">
+
+                            <a
+                                    th:href="@{/tag/editar/{id}(id=${tag.id})}"
+                                    class="action edit">
+
+                                Editar
+
+                            </a>
+
+
+                            <a
+                                    th:href="@{/tag/excluir/{id}(id=${tag.id})}"
+                                    class="action delete"
+
+                                    onclick="return confirm('Tem certeza que deseja excluir esta Tag RFID?');">
+
+                                Excluir
+
+                            </a>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <!-- =========================
+             ESTADO VAZIO
+             ========================= -->
+
+        <div
+                th:if="${#lists.isEmpty(tags)}"
+                class="empty-state">
+
+            <div class="empty-icon">
+                🏷️
+            </div>
+
+            <h2>
+                Nenhuma Tag RFID cadastrada
+            </h2>
+
+            <p>
+                Ainda não existem Tags RFID cadastradas no sistema.
+            </p>
+
+            <a
+                    th:href="@{/tag/form-cadastro}"
+                    class="btn btn-primary">
+
+                Cadastrar primeira Tag
+
+            </a>
+
+        </div>
+
+    </main>
+
+
+    <!-- =========================
+         RODAPÉ
+         ========================= -->
+
+    <footer>
+
+        <span>
+            Sistema de Controle de Almoxarifado
+        </span>
+
+        <span>
+            Tags RFID
+        </span>
+
+    </footer>
+
+</div>
+
+</body>
+
+</html>

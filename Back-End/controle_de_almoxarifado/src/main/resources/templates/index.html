@@ -4,6 +4,7 @@
 <head>
 
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Controle de Almoxarifado</title>
 
     <style>
@@ -20,68 +21,84 @@
         }
 
         header{
-
             background:#1565C0;
             color:white;
-            padding:20px;
+            padding:25px;
             text-align:center;
+        }
 
+        header h1 {
+            margin-bottom: 5px;
         }
 
         .container{
-
-            width:1000px;
+            width:1100px;
+            max-width: 90%;
             margin:40px auto;
-
         }
 
         .cards{
-
             display:grid;
-            grid-template-columns:repeat(3,1fr);
+            grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));
             gap:20px;
-
         }
 
         .card{
-
             background:white;
             padding:25px;
             border-radius:10px;
             box-shadow:0 0 10px rgba(0,0,0,.1);
             text-align:center;
-
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         .card h2{
-
             margin-bottom:15px;
             color:#1565C0;
-
         }
 
         .card p{
-
             color:#555;
             margin-bottom:20px;
+        }
 
+        .botoes-grupo {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
         }
 
         .botao{
-
             display:inline-block;
             text-decoration:none;
             background:#1565C0;
             color:white;
-            padding:10px 20px;
+            padding:10px 15px;
             border-radius:5px;
-
+            font-size: 14px;
+            font-weight: bold;
+            transition: background 0.2s;
+            flex: 1;
         }
 
         .botao:hover{
-
             background:#0D47A1;
+        }
 
+        .botao.secundario {
+            background: #2E7D32;
+        }
+
+        .botao.secundario:hover {
+            background: #1B5E20;
+        }
+
+        .botao.desabilitado {
+            background: #ccc;
+            cursor: not-allowed;
+            pointer-events: none;
         }
 
     </style>
@@ -104,79 +121,81 @@
 
         <div class="card">
 
-            <h2>📦 Produtos</h2>
+            <div>
+                <h2>📦 Produtos</h2>
+                <p>Cadastre e gerencie os produtos do almoxarifado.</p>
+            </div>
 
-            <p>Cadastre e gerencie os produtos do almoxarifado.</p>
-
-            <a class="botao"
-               href="./produto/cadastro_produto.html">
-                Acessar
-            </a>
-
-        </div>
-
-        <div class="card">
-
-            <h2>🏷 Tags RFID</h2>
-
-            <p>Associe uma Tag RFID a um produto.</p>
-
-            <a class="botao"
-               href="./tag/cadastro_tag.html">
-                Acessar
-            </a>
+            <div class="botoes-grupo">
+                <a class="botao" th:href="@{/produto/listar}">Acessar Listagem</a>
+            </div>
 
         </div>
 
         <div class="card">
 
-            <h2>📡 Leitores RFID</h2>
+            <div>
+                <h2>🏷 Tags RFID</h2>
+                <p>Associe uma Tag RFID a um produto.</p>
+            </div>
 
-            <p>Cadastre os leitores instalados no almoxarifado.</p>
-
-            <a class="botao"
-               href="./leitor/cadastro_leitor.html">
-                Acessar
-            </a>
-
-        </div>
-
-        <div class="card">
-
-            <h2>📥 Entradas</h2>
-
-            <p>Registrar entrada de produtos.</p>
-
-            <a class="botao"
-               href="#">
-                Em breve
-            </a>
+            <div class="botoes-grupo">
+                <a class="botao" th:href="@{/tag/listar}">Acessar</a>
+            </div>
 
         </div>
 
         <div class="card">
 
-            <h2>📤 Saídas</h2>
+            <div>
+                <h2>📡 Leitores RFID</h2>
+                <p>Cadastre os leitores instalados no almoxarifado.</p>
+            </div>
 
-            <p>Registrar saída de produtos.</p>
-
-            <a class="botao"
-               href="#">
-                Em breve
-            </a>
+            <div class="botoes-grupo">
+                <a class="botao" th:href="@{/leitor/listar}">Acessar</a>
+            </div>
 
         </div>
 
         <div class="card">
 
-            <h2>📊 Estoque</h2>
+            <div>
+                <h2>📥 Entradas</h2>
+                <p>Registrar entrada de produtos.</p>
+            </div>
 
-            <p>Consultar o estoque disponível.</p>
+            <div class="botoes-grupo">
+                <a class="botao desabilitado" href="#">Em breve</a>
+            </div>
 
-            <a class="botao"
-               href="#">
-                Em breve
-            </a>
+        </div>
+
+        <div class="card">
+
+            <div>
+                <h2>📤 Saídas</h2>
+                <p>Registrar saída de produtos.</p>
+            </div>
+
+            <div class="botoes-grupo">
+                <a class="botao desabilitado" href="#">Em breve</a>
+            </div>
+
+        </div>
+
+        <div class="card">
+
+            <div>
+                <h2>📊 Estoque</h2>
+                <p>Consultar e cadastrar o estoque disponível.</p>
+            </div>
+
+            <div class="botoes-grupo">
+                <!-- Links para a Listagem e para o Formulário de Cadastro do Estoque -->
+                <a class="botao" th:href="@{/estoque/listar}">Consultar</a>
+                <a class="botao secundario" th:href="@{/estoque/form-cadastro}">+ Novo</a>
+            </div>
 
         </div>
 

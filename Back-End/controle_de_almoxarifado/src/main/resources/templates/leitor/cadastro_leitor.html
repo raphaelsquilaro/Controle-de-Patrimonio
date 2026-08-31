@@ -1,106 +1,85 @@
 <!DOCTYPE html>
-<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Cadastro de Leitor RFID</title>
+    <title th:text="${leitorRFID.id == null ? 'Cadastrar Leitor RFID' : 'Editar Leitor RFID'}">
+        Cadastrar Leitor RFID
+    </title>
 
-    <style>
-
-        body{
-
-            font-family:Arial;
-            background:#f4f4f4;
-            padding:40px;
-
-        }
-
-        .container{
-
-            width:600px;
-            margin:auto;
-            background:white;
-            padding:25px;
-            border-radius:10px;
-
-        }
-
-        input,select{
-
-            width:100%;
-            padding:10px;
-            margin-top:10px;
-
-        }
-
-        button{
-
-            width:100%;
-            padding:12px;
-            margin-top:20px;
-            background:#3949AB;
-            color:white;
-            border:none;
-
-        }
-
-    </style>
-
+    <link rel="stylesheet" th:href="@{/leitor-rfid.css}">
 </head>
 
 <body>
 
 <div class="container">
 
-    <h2>Cadastro do Leitor RFID</h2>
+    <div class="card">
 
-    <form
-            th:action="@{/leitor/salvar}"
-            th:object="${leitor}"
-            method="post">
+        <div class="card-header">
+            <div class="icon">📡</div>
 
-        <label>Nome do Leitor</label>
+            <div>
+                <h1 th:text="${leitorRFID.id == null ? 'Cadastrar Leitor RFID' : 'Editar Leitor RFID'}">
+                    Cadastrar Leitor RFID
+                </h1>
 
-        <input
-                type="text"
-                th:field="*{nome}">
+                <p>
+                    Cadastre as informações do leitor RFID do almoxarifado.
+                </p>
+            </div>
+        </div>
 
-        <label>Localização</label>
+        <form th:action="@{/leitor/salvar}"
+              th:object="${leitorRFID}"
+              method="post">
 
-        <input
-                type="text"
-                th:field="*{localizacao}">
+            <input type="hidden" th:field="*{id}">
 
-        <label>Status</label>
+            <div class="form-group">
+                <label for="nome">Nome do leitor</label>
 
-        <select
-                th:field="*{online}">
+                <input
+                        type="text"
+                        id="nome"
+                        th:field="*{nome}"
+                        placeholder="Ex: Leitor RFID Entrada"
+                        required
+                >
+            </div>
 
-            <option value="true">
+            <div class="form-group">
+                <label for="localizacao">Localização</label>
 
-                Online
+                <input
+                        type="text"
+                        id="localizacao"
+                        th:field="*{localizacao}"
+                        placeholder="Ex: Entrada do Almoxarifado"
+                        required
+                >
+            </div>
 
-            </option>
+            <div class="form-group">
+                <label for="online">Status</label>
 
-            <option value="false">
+                <select id="online" th:field="*{online}" required>
+                    <option value="">Selecione o status</option>
+                    <option value="true">Online</option>
+                    <option value="false">Offline</option>
+                </select>
+            </div>
 
-                Offline
+            <button type="submit">
+                Salvar
+            </button>
 
-            </option>
+        </form>
 
-        </select>
-
-        <button>
-
-            Salvar
-
-        </button>
-
-    </form>
+    </div>
 
 </div>
 
 </body>
-
 </html>

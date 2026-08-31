@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pt-BR"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Leitores RFID</title>
+
+    <link rel="stylesheet"
+          th:href="@{/listar-leitor.css}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- Cabeçalho -->
+    <header class="page-header">
+
+        <div class="header-info">
+
+            <div class="icon">
+                📡
+            </div>
+
+            <div>
+                <h1>Leitores RFID</h1>
+
+                <p>
+                    Gerencie os leitores RFID do almoxarifado.
+                </p>
+            </div>
+
+        </div>
+
+        <a th:href="@{/leitor/form-cadastro}"
+           class="btn btn-primary">
+
+            <span>+</span>
+
+            Novo leitor
+
+        </a>
+
+    </header>
+
+
+    <!-- Mensagem de sucesso/erro -->
+    <div th:if="${mensagem}"
+         class="alert">
+
+        <span th:text="${mensagem}">
+            Mensagem
+        </span>
+
+    </div>
+
+
+    <!-- Área principal -->
+    <main class="content">
+
+        <!-- Caso existam leitores -->
+        <div th:if="${not #lists.isEmpty(leitores)}"
+             class="table-container">
+
+            <table>
+
+                <thead>
+
+                <tr>
+
+                    <th>ID</th>
+
+                    <th>Nome</th>
+
+                    <th>Localização</th>
+
+                    <th>Status</th>
+
+                    <th class="actions-column">
+                        Ações
+                    </th>
+
+                </tr>
+
+                </thead>
+
+                <tbody>
+
+                <tr th:each="leitor : ${leitores}">
+
+                    <!-- ID -->
+                    <td>
+
+                        <span class="id">
+                            #
+                            <span th:text="${leitor.id}">
+                                1
+                            </span>
+                        </span>
+
+                    </td>
+
+
+                    <!-- Nome -->
+                    <td>
+
+                        <div class="reader-name">
+
+                            <div class="reader-icon">
+                                📡
+                            </div>
+
+                            <span th:text="${leitor.nome}">
+                                Leitor RFID
+                            </span>
+
+                        </div>
+
+                    </td>
+
+
+                    <!-- Localização -->
+                    <td>
+
+                        <span class="location"
+                              th:text="${leitor.localizacao}">
+                            Entrada
+                        </span>
+
+                    </td>
+
+
+                    <!-- Status -->
+                    <td>
+
+                        <span th:if="${leitor.online}"
+                              class="status status-online">
+
+                            <span class="status-dot"></span>
+
+                            Online
+
+                        </span>
+
+                        <span th:unless="${leitor.online}"
+                              class="status status-offline">
+
+                            <span class="status-dot"></span>
+
+                            Offline
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- Ações -->
+                    <td>
+
+                        <div class="actions">
+
+                            <a th:href="@{/leitor/editar/{id}(id=${leitor.id})}"
+                               class="action edit">
+
+                                Editar
+
+                            </a>
+
+                            <a th:href="@{/leitor/excluir/{id}(id=${leitor.id})}"
+                               class="action delete"
+                               onclick="return confirm('Tem certeza que deseja excluir este leitor?');">
+
+                                Excluir
+
+                            </a>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <!-- Caso não existam leitores -->
+        <div th:if="${#lists.isEmpty(leitores)}"
+             class="empty-state">
+
+            <div class="empty-icon">
+                📡
+            </div>
+
+            <h2>Nenhum leitor cadastrado</h2>
+
+            <p>
+                Ainda não existem leitores RFID cadastrados.
+            </p>
+
+            <a th:href="@{/leitor/form-cadastro}"
+               class="btn btn-primary">
+
+                Cadastrar primeiro leitor
+
+            </a>
+
+        </div>
+
+    </main>
+
+
+    <!-- Rodapé -->
+    <footer>
+
+        <span>
+            Sistema de Controle de Almoxarifado
+        </span>
+
+        <span>
+            Leitores RFID
+        </span>
+
+    </footer>
+
+</div>
+
+</body>
+
+</html>

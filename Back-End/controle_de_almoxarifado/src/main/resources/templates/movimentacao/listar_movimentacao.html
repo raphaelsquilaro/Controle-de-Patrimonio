@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="pt-BR"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Movimentações</title>
+
+    <link rel="stylesheet"
+          th:href="@{/listar-movimentacao.css}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- =========================
+         CABEÇALHO
+         ========================= -->
+
+    <header class="page-header">
+
+        <div class="header-info">
+
+            <div class="icon">
+                📋
+            </div>
+
+            <div>
+
+                <h1>
+                    Movimentações
+                </h1>
+
+                <p>
+                    Histórico de entradas e saídas do almoxarifado.
+                </p>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================
+         MENSAGEM
+         ========================= -->
+
+    <div
+            th:if="${mensagem}"
+            class="alert">
+
+        <span th:text="${mensagem}">
+            Mensagem
+        </span>
+
+    </div>
+
+
+    <!-- =========================
+         CONTEÚDO
+         ========================= -->
+
+    <main class="content">
+
+
+        <!-- =========================
+             TABELA
+             ========================= -->
+
+        <div
+                th:if="${not #lists.isEmpty(movimentacoes)}"
+                class="table-container">
+
+            <table>
+
+                <thead>
+
+                <tr>
+
+                    <th>
+                        ID
+                    </th>
+
+                    <th>
+                        Tipo
+                    </th>
+
+                    <th>
+                        Produto
+                    </th>
+
+                    <th>
+                        Quantidade
+                    </th>
+
+                    <th>
+                        Usuário
+                    </th>
+
+                    <th>
+                        Data e hora
+                    </th>
+
+                </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                <tr
+                        th:each="movimentacao : ${movimentacoes}">
+
+
+                    <!-- =========================
+                         ID
+                         ========================= -->
+
+                    <td>
+
+                        <span
+                                class="id"
+                                th:text="'#' + ${movimentacao.id}">
+
+                            #1
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- =========================
+                         TIPO
+                         ========================= -->
+
+                    <td>
+
+                        <span
+                                th:if="${movimentacao.tipo.name() == 'ENTRADA'}"
+                                class="movement movement-entry">
+
+                            <span class="movement-icon">
+                                ↑
+                            </span>
+
+                            Entrada
+
+                        </span>
+
+
+                        <span
+                                th:if="${movimentacao.tipo.name() == 'SAIDA'}"
+                                class="movement movement-exit">
+
+                            <span class="movement-icon">
+                                ↓
+                            </span>
+
+                            Saída
+
+                        </span>
+
+
+                        <span
+                                th:if="${movimentacao.tipo.name() != 'ENTRADA'
+                                and movimentacao.tipo.name() != 'SAIDA'}"
+                                class="movement movement-other"
+                                th:text="${movimentacao.tipo}">
+
+                            Tipo
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- =========================
+                         PRODUTO
+                         ========================= -->
+
+                    <td>
+
+                        <div
+                                th:if="${movimentacao.produto != null}"
+                                class="product">
+
+                            <div class="product-icon">
+                                📦
+                            </div>
+
+                            <span
+                                    th:text="${movimentacao.produto.nome}">
+
+                                Produto
+
+                            </span>
+
+                        </div>
+
+
+                        <span
+                                th:unless="${movimentacao.produto != null}"
+                                class="not-found">
+
+                            Produto não informado
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- =========================
+                         QUANTIDADE
+                         ========================= -->
+
+                    <td>
+
+                        <span
+                                th:if="${movimentacao.tipo.name() == 'ENTRADA'}"
+                                class="quantity quantity-entry"
+                                th:text="'+' + ${movimentacao.quantidade}">
+
+                            +10
+
+                        </span>
+
+
+                        <span
+                                th:if="${movimentacao.tipo.name() == 'SAIDA'}"
+                                class="quantity quantity-exit"
+                                th:text="'-' + ${movimentacao.quantidade}">
+
+                            -5
+
+                        </span>
+
+
+                        <span
+                                th:if="${movimentacao.tipo.name() != 'ENTRADA'
+                                and movimentacao.tipo.name() != 'SAIDA'}"
+                                class="quantity"
+                                th:text="${movimentacao.quantidade}">
+
+                            10
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- =========================
+                         USUÁRIO
+                         ========================= -->
+
+                    <td>
+
+                        <div
+                                th:if="${movimentacao.usuario != null}"
+                                class="user">
+
+                            <div class="avatar"
+                                 th:text="${movimentacao.usuario.nome != null
+                                    and !movimentacao.usuario.nome.isEmpty()
+                                    ? #strings.substring(
+                                        movimentacao.usuario.nome, 0, 1
+                                      ).toUpperCase()
+                                    : '?'}">
+
+                                J
+
+                            </div>
+
+                            <span
+                                    th:text="${movimentacao.usuario.nome}">
+
+                                João da Silva
+
+                            </span>
+
+                        </div>
+
+
+                        <span
+                                th:unless="${movimentacao.usuario != null}"
+                                class="not-found">
+
+                            Usuário não informado
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- =========================
+                         DATA / HORA
+                         ========================= -->
+
+                    <td>
+
+                        <div
+                                th:if="${movimentacao.dataHora != null}"
+                                class="datetime">
+
+                            <span
+                                    class="date"
+                                    th:text="${#temporals.format(
+                                    movimentacao.dataHora,
+                                    'dd/MM/yyyy'
+                                )}">
+
+                                25/08/2026
+
+                            </span>
+
+                            <span
+                                    class="time"
+                                    th:text="${#temporals.format(
+                                    movimentacao.dataHora,
+                                    'HH:mm'
+                                )}">
+
+                                15:30
+
+                            </span>
+
+                        </div>
+
+
+                        <span
+                                th:unless="${movimentacao.dataHora != null}"
+                                class="not-found">
+
+                            Não informado
+
+                        </span>
+
+                    </td>
+
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <!-- =========================
+             ESTADO VAZIO
+             ========================= -->
+
+        <div
+                th:if="${#lists.isEmpty(movimentacoes)}"
+                class="empty-state">
+
+            <div class="empty-icon">
+                📋
+            </div>
+
+            <h2>
+                Nenhuma movimentação registrada
+            </h2>
+
+            <p>
+                Ainda não existem movimentações no almoxarifado.
+            </p>
+
+        </div>
+
+    </main>
+
+
+    <!-- =========================
+         RODAPÉ
+         ========================= -->
+
+    <footer>
+
+        <span>
+            Sistema de Controle de Almoxarifado
+        </span>
+
+        <span>
+            Histórico de movimentações
+        </span>
+
+    </footer>
+
+</div>
+
+</body>
+
+</html>

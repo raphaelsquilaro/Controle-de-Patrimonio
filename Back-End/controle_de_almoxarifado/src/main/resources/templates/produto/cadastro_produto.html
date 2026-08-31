@@ -1,104 +1,207 @@
 <!DOCTYPE html>
-<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<html lang="pt-BR"
+      xmlns:th="http://www.thymeleaf.org">
+
 <head>
+
     <meta charset="UTF-8">
-    <title>Cadastro de Produto</title>
 
-    <style>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
-        body{
-            font-family: Arial, Helvetica, sans-serif;
-            background:#f4f4f4;
-            margin:0;
-            padding:40px;
-        }
+    <title th:text="${produto.id == null ? 'Cadastrar Produto' : 'Editar Produto'}">
+        Cadastrar Produto
+    </title>
 
-        .container{
-            width:600px;
-            margin:auto;
-            background:white;
-            padding:25px;
-            border-radius:10px;
-            box-shadow:0 0 10px rgba(0,0,0,.15);
-        }
-
-        h2{
-            text-align:center;
-            color:#333;
-        }
-
-        label{
-            display:block;
-            margin-top:15px;
-            font-weight:bold;
-        }
-
-        input, textarea, select{
-
-            width:100%;
-            padding:10px;
-            margin-top:5px;
-            border:1px solid #ccc;
-            border-radius:5px;
-
-        }
-
-        button{
-
-            width:100%;
-            margin-top:25px;
-            padding:12px;
-            background:#1565C0;
-            color:white;
-            border:none;
-            border-radius:5px;
-            cursor:pointer;
-
-        }
-
-        button:hover{
-
-            background:#0D47A1;
-
-        }
-
-    </style>
+    <link rel="stylesheet"
+          th:href="@{/cadastro-produto.css}">
 
 </head>
+
 <body>
 
 <div class="container">
 
-    <h2>Cadastro de Produto</h2>
+    <div class="card">
 
-    <form th:action="@{/produto/salvar}" th:object="${produto}" method="post">
+        <!-- Cabeçalho -->
+        <div class="card-header">
 
-        <label>Nome</label>
-        <input type="text" th:field="*{nome}">
+            <div class="icon">
+                📦
+            </div>
 
-        <label>Descrição</label>
-        <textarea th:field="*{descricao}"></textarea>
+            <div>
 
-        <label>Categoria</label>
-        <input type="text" th:field="*{categoria}">
+                <h1 th:text="${produto.id == null ? 'Cadastrar Produto' : 'Editar Produto'}">
+                    Cadastrar Produto
+                </h1>
 
-        <label>Status</label>
+                <p>
+                    Informe os dados do produto do almoxarifado.
+                </p>
 
-        <select th:field="*{status}">
-            <option value="">Selecione</option>
-            <option th:each="status : ${statusProduto}"
-                    th:value="${status}"
-                    th:text="${status}">
-            </option>
-        </select>
+            </div>
 
-        <button type="submit">
-            Salvar Produto
-        </button>
+        </div>
 
-    </form>
+
+        <!-- Formulário -->
+        <form th:action="@{/produto/salvar}"
+              th:object="${produto}"
+              method="post">
+
+            <!-- ID para edição -->
+            <input type="hidden"
+                   th:field="*{id}">
+
+
+            <!-- Nome -->
+            <div class="form-group">
+
+                <label for="nome">
+                    Nome do produto
+                </label>
+
+                <input
+                        type="text"
+                        id="nome"
+                        th:field="*{nome}"
+                        placeholder="Ex: Parafuso sextavado"
+                        required
+                >
+
+                <span
+                        class="error"
+                        th:if="${#fields.hasErrors('nome')}"
+                        th:errors="*{nome}">
+                </span>
+
+            </div>
+
+
+            <!-- Descrição -->
+            <div class="form-group">
+
+                <label for="descricao">
+                    Descrição
+                </label>
+
+                <textarea
+                        id="descricao"
+                        th:field="*{descricao}"
+                        placeholder="Informe uma descrição do produto..."
+                        rows="5">
+                </textarea>
+
+                <span
+                        class="error"
+                        th:if="${#fields.hasErrors('descricao')}"
+                        th:errors="*{descricao}">
+                </span>
+
+            </div>
+
+
+            <!-- Categoria -->
+            <div class="form-group">
+
+                <label for="categoria">
+                    Categoria
+                </label>
+
+                <input
+                        type="text"
+                        id="categoria"
+                        th:field="*{categoria}"
+                        placeholder="Ex: Ferramentas"
+                        required
+                >
+
+                <span
+                        class="error"
+                        th:if="${#fields.hasErrors('categoria')}"
+                        th:errors="*{categoria}">
+                </span>
+
+            </div>
+
+
+            <!-- Status -->
+            <div class="form-group">
+
+                <label for="status">
+                    Status do produto
+                </label>
+
+                <select
+                        id="status"
+                        th:field="*{status}"
+                        required>
+
+                    <option value="">
+                        Selecione o status
+                    </option>
+
+                    <option
+                            th:each="statusProduto : ${T(sp.senai.org.controle_de_almoxarifado.model.enums.StatusProduto).values()}"
+                            th:value="${statusProduto}"
+                            th:text="${statusProduto}">
+                    </option>
+
+                </select>
+
+                <span
+                        class="error"
+                        th:if="${#fields.hasErrors('status')}"
+                        th:errors="*{status}">
+                </span>
+
+            </div>
+
+
+            <!-- Informação -->
+            <div class="info-box">
+
+                <div class="info-icon">
+                    ℹ
+                </div>
+
+                <div>
+                    <strong>Informação</strong>
+
+                    <p>
+                        O estoque e a Tag RFID serão associados
+                        posteriormente ao produto.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <!-- Botões -->
+            <div class="form-actions">
+
+                <a
+                        th:href="@{/produto/listar}"
+                        class="btn btn-cancelar">
+                    Cancelar
+                </a>
+
+                <button
+                        type="submit"
+                        class="btn btn-salvar">
+                    Salvar produto
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
 
 </div>
 
 </body>
+
 </html>

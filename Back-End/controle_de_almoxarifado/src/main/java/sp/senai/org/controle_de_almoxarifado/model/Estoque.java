@@ -9,6 +9,7 @@ public class Estoque {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(length = 3)
     private Integer quantidade;
 
     @OneToOne
