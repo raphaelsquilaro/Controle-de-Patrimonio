@@ -1,104 +1,121 @@
 <!DOCTYPE html>
-<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<html lang="pt-BR"
+      xmlns:th="http://www.thymeleaf.org">
 
 <head>
-
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
     <title>Controle de Almoxarifado</title>
 
     <style>
 
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-            font-family:Arial, Helvetica, sans-serif;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        body{
-            background:#f4f6f8;
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            color: #333;
         }
 
-        header{
-            background:#1565C0;
-            color:white;
-            padding:25px;
-            text-align:center;
+        header {
+            background: #1f2937;
+            color: white;
+            padding: 25px 40px;
         }
 
         header h1 {
-            margin-bottom: 5px;
+            font-size: 28px;
         }
 
-        .container{
-            width:1100px;
-            max-width: 90%;
-            margin:40px auto;
+        header p {
+            margin-top: 8px;
+            color: #d1d5db;
         }
 
-        .cards{
-            display:grid;
-            grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));
-            gap:20px;
+        main {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
         }
 
-        .card{
-            background:white;
-            padding:25px;
-            border-radius:10px;
-            box-shadow:0 0 10px rgba(0,0,0,.1);
-            text-align:center;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+        .titulo-secao {
+            margin-bottom: 25px;
+            font-size: 24px;
         }
 
-        .card h2{
-            margin-bottom:15px;
-            color:#1565C0;
+        .grid {
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
         }
 
-        .card p{
-            color:#555;
-            margin-bottom:20px;
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow:
+                    0 4px 12px rgba(0, 0, 0, 0.08);
         }
 
-        .botoes-grupo {
+        .card h2 {
+            margin-bottom: 10px;
+            color: #1f2937;
+        }
+
+        .card p {
+            color: #6b7280;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .acoes {
             display: flex;
             gap: 10px;
-            justify-content: center;
+            flex-wrap: wrap;
         }
 
-        .botao{
-            display:inline-block;
-            text-decoration:none;
-            background:#1565C0;
-            color:white;
-            padding:10px 15px;
-            border-radius:5px;
-            font-size: 14px;
+        .botao {
+            text-decoration: none;
+            padding: 10px 16px;
+            border-radius: 6px;
             font-weight: bold;
-            transition: background 0.2s;
-            flex: 1;
+            transition: 0.2s;
         }
 
-        .botao:hover{
-            background:#0D47A1;
+        .btn-cadastro {
+            background: #2563eb;
+            color: white;
         }
 
-        .botao.secundario {
-            background: #2E7D32;
+        .btn-listar {
+            background: #10b981;
+            color: white;
         }
 
-        .botao.secundario:hover {
-            background: #1B5E20;
+        .btn-listar-unico {
+            background: #8b5cf6;
+            color: white;
         }
 
-        .botao.desabilitado {
-            background: #ccc;
-            cursor: not-allowed;
-            pointer-events: none;
+        .botao:hover {
+            opacity: 0.85;
+            transform: translateY(-2px);
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            margin-top: 40px;
+            background: #1f2937;
+            color: #d1d5db;
         }
 
     </style>
@@ -109,99 +126,233 @@
 
 <header>
 
-    <h1>Controle de Almoxarifado RFID</h1>
+    <h1>📦 Controle de Almoxarifado</h1>
 
-    <p>Gerenciamento de Produtos e Dispositivos IoT</p>
+    <p>
+        Sistema de gerenciamento de produtos,
+        estoque e dispositivos RFID
+    </p>
 
 </header>
 
-<div class="container">
+<main>
 
-    <div class="cards">
+    <h2 class="titulo-secao">
+        Painel Principal
+    </h2>
+
+
+    <section class="grid">
+
+
+        <!-- =========================
+             PRODUTOS
+             ========================= -->
 
         <div class="card">
 
-            <div>
-                <h2>📦 Produtos</h2>
-                <p>Cadastre e gerencie os produtos do almoxarifado.</p>
-            </div>
+            <h2>📦 Produtos</h2>
 
-            <div class="botoes-grupo">
-                <a class="botao" th:href="@{/produto/listar}">Acessar Listagem</a>
+            <p>
+                Cadastre, visualize e gerencie
+                os produtos do almoxarifado.
+            </p>
+
+            <div class="acoes">
+
+                <a
+                        class="botao btn-cadastro"
+                        th:href="@{/produto/form-cadastro}"
+                >
+                    + Cadastrar
+                </a>
+
+                <a
+                        class="botao btn-listar"
+                        th:href="@{/produto/listar}"
+                >
+                    Listar Produtos
+                </a>
+
             </div>
 
         </div>
 
+
+        <!-- =========================
+             ESTOQUE
+             ========================= -->
+
         <div class="card">
 
-            <div>
-                <h2>🏷 Tags RFID</h2>
-                <p>Associe uma Tag RFID a um produto.</p>
-            </div>
+            <h2>📊 Estoque</h2>
 
-            <div class="botoes-grupo">
-                <a class="botao" th:href="@{/tag/listar}">Acessar</a>
+            <p>
+                Gerencie a quantidade disponível
+                de cada produto.
+            </p>
+
+            <div class="acoes">
+
+                <a
+                        class="botao btn-cadastro"
+                        th:href="@{/estoque/form-cadastro}"
+                >
+                    + Cadastrar
+                </a>
+
+                <a
+                        class="botao btn-listar"
+                        th:href="@{/estoque/listar}"
+                >
+                    Listar Estoque
+                </a>
+
             </div>
 
         </div>
 
+
+        <!-- =========================
+             TAG RFID
+             ========================= -->
+
         <div class="card">
 
-            <div>
-                <h2>📡 Leitores RFID</h2>
-                <p>Cadastre os leitores instalados no almoxarifado.</p>
-            </div>
+            <h2>🏷️ Tags RFID</h2>
 
-            <div class="botoes-grupo">
-                <a class="botao" th:href="@{/leitor/listar}">Acessar</a>
+            <p>
+                Cadastre e acompanhe as tags
+                RFID vinculadas aos produtos.
+            </p>
+
+            <div class="acoes">
+
+                <a
+                        class="botao btn-cadastro"
+                        th:href="@{/tag/form-cadastro}"
+                >
+                    + Cadastrar
+                </a>
+
+                <a
+                        class="botao btn-listar"
+                        th:href="@{/tag/listar}"
+                >
+                    Listar Tags
+                </a>
+
             </div>
 
         </div>
 
+
+        <!-- =========================
+             LEITORES RFID
+             ========================= -->
+
         <div class="card">
 
-            <div>
-                <h2>📥 Entradas</h2>
-                <p>Registrar entrada de produtos.</p>
-            </div>
+            <h2>📡 Leitores RFID</h2>
 
-            <div class="botoes-grupo">
-                <a class="botao desabilitado" href="#">Em breve</a>
+            <p>
+                Cadastre e gerencie os leitores
+                RFID utilizados pelo sistema.
+            </p>
+
+            <div class="acoes">
+
+                <a
+                        class="botao btn-cadastro"
+                        th:href="@{/leitor/form-cadastro}"
+                >
+                    + Cadastrar
+                </a>
+
+                <a
+                        class="botao btn-listar"
+                        th:href="@{/leitor/listar}"
+                >
+                    Listar Leitores
+                </a>
+
             </div>
 
         </div>
 
+
+        <!-- =========================
+             MOVIMENTAÇÕES
+             ========================= -->
+
         <div class="card">
 
-            <div>
-                <h2>📤 Saídas</h2>
-                <p>Registrar saída de produtos.</p>
-            </div>
+            <h2>🔄 Movimentações</h2>
 
-            <div class="botoes-grupo">
-                <a class="botao desabilitado" href="#">Em breve</a>
+            <p>
+                Consulte o histórico de
+                movimentações do estoque.
+            </p>
+
+            <div class="acoes">
+
+                <a
+                        class="botao btn-listar-unico"
+                        th:href="@{/movimentacao/listar}"
+                >
+                    Ver Movimentações
+                </a>
+
             </div>
 
         </div>
 
+
+        <!-- =========================
+             USUÁRIOS
+             ========================= -->
+
         <div class="card">
 
-            <div>
-                <h2>📊 Estoque</h2>
-                <p>Consultar e cadastrar o estoque disponível.</p>
-            </div>
+            <h2>👤 Usuários</h2>
 
-            <div class="botoes-grupo">
-                <!-- Links para a Listagem e para o Formulário de Cadastro do Estoque -->
-                <a class="botao" th:href="@{/estoque/listar}">Consultar</a>
-                <a class="botao secundario" th:href="@{/estoque/form-cadastro}">+ Novo</a>
+            <p>
+                Cadastre e gerencie os usuários
+                que possuem acesso ao sistema.
+            </p>
+
+            <div class="acoes">
+
+                <a
+                        class="botao btn-cadastro"
+                        th:href="@{/user/form-cadastro}"
+                >
+                    + Cadastrar
+                </a>
+
+                <a
+                        class="botao btn-listar"
+                        th:href="@{/user/listar}"
+                >
+                    Listar Usuários
+                </a>
+
             </div>
 
         </div>
 
-    </div>
 
-</div>
+    </section>
+
+</main>
+
+<footer>
+
+    <p>
+        © 2026 - Sistema de Controle de Almoxarifado
+    </p>
+
+</footer>
 
 </body>
 

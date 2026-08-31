@@ -5,5 +5,5 @@ public enum TipoMovimentacao {
     SAIDA,
     MANUTENCAO,
     DEVOLUCAO,
-    ESTRAVIR
+    EXTRAVIO
 }

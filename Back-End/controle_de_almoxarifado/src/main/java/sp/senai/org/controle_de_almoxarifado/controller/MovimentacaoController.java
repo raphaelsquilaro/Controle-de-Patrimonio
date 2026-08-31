@@ -4,26 +4,25 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import sp.senai.org.controle_de_almoxarifado.repository.MovimentacaoRepository;
+import sp.senai.org.controle_de_almoxarifado.service.MovimentacaoService;
 
 @Controller
 @RequestMapping("/movimentacao")
 public class MovimentacaoController {
 
-    private final MovimentacaoRepository movimentacaoRepository;
+    private final MovimentacaoService movimentacaoService;
 
     public MovimentacaoController(
-            MovimentacaoRepository movimentacaoRepository
+            MovimentacaoService movimentacaoService
     ) {
-        this.movimentacaoRepository = movimentacaoRepository;
+        this.movimentacaoService = movimentacaoService;
     }
 
     @GetMapping("/listar")
     public String listar(Model model) {
-
         model.addAttribute(
                 "movimentacoes",
-                movimentacaoRepository.findAll()
+                movimentacaoService.listarMovimentacoes()
         );
 
         return "movimentacao/listar_movimentacao";
