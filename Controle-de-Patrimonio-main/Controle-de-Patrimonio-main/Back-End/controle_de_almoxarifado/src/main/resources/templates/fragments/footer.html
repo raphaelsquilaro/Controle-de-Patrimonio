@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="footer">
+    <style>
+        .almax-footer {
+            background-color: #121212;
+            border-top: 1px solid #262626;
+            box-shadow: 0 -1px 0 rgba(255, 107, 0, 0.35);
+            padding: 1.1rem 2rem;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .almax-footer .footer-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .almax-footer .footer-copy {
+            color: #8C8C8C;
+            font-size: 0.82rem;
+            font-weight: 400;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .almax-footer .footer-copy .footer-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background-color: #FF6B00;
+            flex-shrink: 0;
+        }
+
+        .almax-footer .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: #5C5C5C;
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .almax-footer .footer-brand strong {
+            color: #A8A8A8;
+            font-weight: 700;
+        }
+
+        @media (max-width: 640px) {
+            .almax-footer .footer-inner {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+
+    <footer class="almax-footer">
+        <div class="footer-inner">
+            <p class="footer-copy">
+                <span class="footer-dot"></span>
+                © 2026 - Sistema de Controle de Almoxarifado
+            </p>
+            <span class="footer-brand"><strong>Almax</strong> RFID</span>
+        </div>
+    </footer>
+</div>
+</html>

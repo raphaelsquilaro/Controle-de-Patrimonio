@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="pt-BR"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Usuários</title>
+
+    <link rel="stylesheet"
+          th:href="@{/listar-usuario.css}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- =========================
+         CABEÇALHO
+         ========================= -->
+
+    <header class="page-header">
+
+        <div class="header-info">
+
+            <div class="icon">
+                👤
+            </div>
+
+            <div>
+
+                <h1>
+                    Usuários
+                </h1>
+
+                <p>
+                    Gerencie os usuários e seus níveis de acesso.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <a
+                th:href="@{/user/form-cadastro}"
+                class="btn btn-primary">
+
+            <span class="plus">
+                +
+            </span>
+
+            Novo usuário
+
+        </a>
+
+    </header>
+
+
+    <!-- =========================
+         MENSAGEM
+         ========================= -->
+
+    <div
+            th:if="${mensagem}"
+            class="alert">
+
+        <span th:text="${mensagem}">
+            Mensagem
+        </span>
+
+    </div>
+
+
+    <!-- =========================
+         CONTEÚDO
+         ========================= -->
+
+    <main class="content">
+
+
+        <!-- =========================
+             TABELA
+             ========================= -->
+
+        <div
+                th:if="${not #lists.isEmpty(users)}"
+                class="table-container">
+
+            <table>
+
+                <thead>
+
+                <tr>
+
+                    <th>
+                        ID
+                    </th>
+
+                    <th>
+                        Usuário
+                    </th>
+
+                    <th>
+                        E-mail
+                    </th>
+
+                    <th>
+                        Nível de acesso
+                    </th>
+
+                    <th class="actions-column">
+                        Ações
+                    </th>
+
+                </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                <tr th:each="usuario : ${users}">
+
+
+                    <!-- =========================
+                         ID
+                         ========================= -->
+
+                    <td>
+
+                        <span
+                                class="id"
+                                th:text="'#' + ${usuario.id}">
+
+                            #1
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- =========================
+                         USUÁRIO
+                         ========================= -->
+
+                    <td>
+
+                        <div class="user-info">
+
+                            <div class="avatar"
+                                 th:text="${#strings.substring(usuario.nome, 0, 1).toUpperCase()}">
+
+                                J
+
+                            </div>
+
+                            <div>
+
+                                <span
+                                        class="user-name"
+                                        th:text="${usuario.nome}">
+
+                                    João da Silva
+
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </td>
+
+
+                    <!-- =========================
+                         E-MAIL
+                         ========================= -->
+
+                    <td>
+
+                        <span
+                                class="email"
+                                th:text="${usuario.email}">
+
+                            joao@email.com
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- =========================
+                         NÍVEL DE ACESSO
+                         ========================= -->
+
+                    <td>
+
+                        <span
+                                class="access-level"
+                                th:text="${usuario.nivelAcesso}">
+
+                            ADMIN
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- =========================
+                         AÇÕES
+                         ========================= -->
+
+                    <td>
+
+                        <div class="actions">
+
+                            <a
+                                    th:href="@{/user/editar/{id}(id=${usuario.id})}"
+                                    class="action edit">
+
+                                Editar
+
+                            </a>
+
+
+                            <a
+                                    th:href="@{/user/excluir/{id}(id=${usuario.id})}"
+                                    class="action delete"
+
+                                    onclick="return confirm('Tem certeza que deseja excluir este usuário?');">
+
+                                Excluir
+
+                            </a>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <!-- =========================
+             ESTADO VAZIO
+             ========================= -->
+
+        <div
+                th:if="${#lists.isEmpty(users)}"
+                class="empty-state">
+
+            <div class="empty-icon">
+                👤
+            </div>
+
+            <h2>
+                Nenhum usuário cadastrado
+            </h2>
+
+            <p>
+                Ainda não existem usuários cadastrados no sistema.
+            </p>
+
+            <a
+                    th:href="@{/user/form-cadastro}"
+                    class="btn btn-primary">
+
+                Cadastrar primeiro usuário
+
+            </a>
+
+        </div>
+
+    </main>
+
+
+    <!-- =========================
+         RODAPÉ
+         ========================= -->
+
+    <footer>
+
+        <span>
+            Sistema de Controle de Almoxarifado
+        </span>
+
+        <span>
+            Usuários
+        </span>
+
+    </footer>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="navbar">
+    <style>
+        :root {
+            --almax-bg: #121212;
+            --almax-bg-elevated: #1A1A1A;
+            --almax-border: #262626;
+            --almax-accent: #FF6B00;
+            --almax-accent-hover: #E05E00;
+            --almax-accent-soft: rgba(255, 107, 0, 0.12);
+            --almax-text: #FFFFFF;
+            --almax-text-muted: #A8A8A8;
+        }
+
+        .almax-navbar {
+            background-color: var(--almax-bg);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 0.85rem 2rem;
+            border-bottom: 1px solid var(--almax-border);
+            box-shadow: 0 1px 0 rgba(255, 107, 0, 0.35), 0 8px 24px rgba(0, 0, 0, 0.35);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        /* Brand */
+        .almax-navbar .brand-logo {
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            flex-shrink: 0;
+        }
+
+        .almax-navbar .brand-mark {
+            width: 34px;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            background: linear-gradient(155deg, var(--almax-accent) 0%, #C24E00 100%);
+            color: #121212;
+            flex-shrink: 0;
+        }
+
+        .almax-navbar .brand-mark svg {
+            width: 19px;
+            height: 19px;
+        }
+
+        .almax-navbar .brand-text {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .almax-navbar .brand-name {
+            color: var(--almax-text);
+            font-weight: 700;
+            font-size: 1.3rem;
+            letter-spacing: 0.3px;
+            line-height: 1;
+        }
+
+        .almax-navbar .brand-sub {
+            color: var(--almax-accent);
+            font-weight: 600;
+            font-size: 0.7rem;
+            letter-spacing: 1.5px;
+            line-height: 1;
+            padding-top: 1px;
+        }
+
+        /* Nav links */
+        .almax-navbar .nav-menu {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            margin: 0;
+            padding: 0;
+            flex: 1;
+            justify-content: center;
+        }
+
+        .almax-navbar .nav-link {
+            color: var(--almax-text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+            padding: 0.5rem 0.8rem;
+            border-radius: 6px;
+            position: relative;
+            transition: color 0.15s ease, background-color 0.15s ease;
+        }
+
+        .almax-navbar .nav-link svg {
+            width: 17px;
+            height: 17px;
+            flex-shrink: 0;
+            opacity: 0.85;
+        }
+
+        .almax-navbar .nav-link:hover {
+            color: var(--almax-text);
+            background-color: var(--almax-bg-elevated);
+        }
+
+        .almax-navbar .nav-link::after {
+            content: "";
+            position: absolute;
+            left: 0.8rem;
+            right: 0.8rem;
+            bottom: 0.15rem;
+            height: 2px;
+            background-color: var(--almax-accent);
+            border-radius: 2px;
+            transform: scaleX(0);
+            transform-origin: center;
+            transition: transform 0.18s ease;
+        }
+
+        .almax-navbar .nav-link:hover::after {
+            transform: scaleX(1);
+        }
+
+        /* User actions */
+        .almax-navbar .nav-user {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            flex-shrink: 0;
+        }
+
+        .almax-navbar .btn-usuario {
+            color: var(--almax-text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.45rem 0.85rem;
+            border: 1px solid var(--almax-border);
+            border-radius: 6px;
+            transition: color 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
+        }
+
+        .almax-navbar .btn-usuario svg {
+            width: 15px;
+            height: 15px;
+        }
+
+        .almax-navbar .btn-usuario:hover {
+            color: var(--almax-text);
+            background-color: var(--almax-bg-elevated);
+            border-color: #3A3A3A;
+        }
+
+        .almax-navbar .btn-logout {
+            background-color: var(--almax-accent-soft);
+            color: var(--almax-accent);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.83rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.45rem 0.9rem;
+            border: 1px solid transparent;
+            border-radius: 6px;
+            transition: background-color 0.15s ease, color 0.15s ease;
+        }
+
+        .almax-navbar .btn-logout svg {
+            width: 15px;
+            height: 15px;
+        }
+
+        .almax-navbar .btn-logout:hover {
+            background-color: var(--almax-accent);
+            color: #121212;
+        }
+
+        /* Responsive */
+        @media (max-width: 960px) {
+            .almax-navbar {
+                flex-wrap: wrap;
+                padding: 0.75rem 1.25rem;
+            }
+
+            .almax-navbar .nav-menu {
+                order: 3;
+                width: 100%;
+                justify-content: flex-start;
+                gap: 0.15rem;
+                overflow-x: auto;
+                padding-top: 0.5rem;
+                border-top: 1px solid var(--almax-border);
+                margin-top: 0.5rem;
+            }
+
+            .almax-navbar .nav-link span {
+                white-space: nowrap;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .almax-navbar .nav-link,
+            .almax-navbar .nav-link::after,
+            .almax-navbar .btn-usuario,
+            .almax-navbar .btn-logout {
+                transition: none;
+            }
+        }
+    </style>
+
+    <nav class="almax-navbar">
+        <div class="nav-brand">
+            <a th:href="@{/}" class="brand-logo">
+                <span class="brand-mark">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                        <path d="M12 3 L4 7 L4 17 L12 21 L20 17 L20 7 Z" />
+                        <path d="M4 7 L12 11 L20 7" />
+                        <path d="M12 11 L12 21" />
+                    </svg>
+                </span>
+                <span class="brand-text">
+                    <span class="brand-name">Almax</span>
+                    <span class="brand-sub">RFID</span>
+                </span>
+            </a>
+        </div>
+
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a th:href="@{/}" class="nav-link">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 11 L12 4 L21 11" />
+                        <path d="M5 10 L5 20 L19 20 L19 10" />
+                    </svg>
+                    <span>Início</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a th:href="@{/produto/listar}" class="nav-link">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3.5 7 L12 3 L20.5 7 L12 11 Z" />
+                        <path d="M3.5 7 L3.5 17 L12 21 L20.5 17 L20.5 7" />
+                        <path d="M12 11 L12 21" />
+                    </svg>
+                    <span>Produtos</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a th:href="@{/estoque/listar}" class="nav-link">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3.5" y="4" width="17" height="4.2" rx="0.6" />
+                        <rect x="3.5" y="10.4" width="17" height="4.2" rx="0.6" />
+                        <rect x="3.5" y="16.8" width="17" height="4.2" rx="0.6" />
+                    </svg>
+                    <span>Estoque</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a th:href="@{/leitor/listar}" class="nav-link">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="13" r="2" />
+                        <path d="M8.3 9.3 a5.2 5.2 0 0 1 7.4 0" />
+                        <path d="M5.5 6.5 a9.2 9.2 0 0 1 13 0" />
+                    </svg>
+                    <span>Leitores RFID</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a th:href="@{/tag/listar}" class="nav-link">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12.5 3.5 L20 11 L12 19 L4.5 11.5 L4.5 3.5 Z" />
+                        <circle cx="8.2" cy="7.3" r="1.15" fill="currentColor" stroke="none" />
+                    </svg>
+                    <span>Tags RFID</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a th:href="@{/movimentacao/listar}" class="nav-link">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 8 L16 8" />
+                        <path d="M12.5 4.5 L16 8 L12.5 11.5" />
+                        <path d="M20 16 L8 16" />
+                        <path d="M11.5 12.5 L8 16 L11.5 19.5" />
+                    </svg>
+                    <span>Movimentações</span>
+                </a>
+            </li>
+        </ul>
+
+        <div class="nav-user">
+            <a th:href="@{/usuario/listar}" class="btn-usuario">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="8.2" r="3.3" />
+                    <path d="M5 20 c0 -4 3 -6.5 7 -6.5 s7 2.5 7 6.5" />
+                </svg>
+                <span>Usuários</span>
+            </a>
+            <a th:href="@{/logout}" class="btn-logout">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 4 L5 4 L5 20 L9 20" />
+                    <path d="M13 12 L21 12" />
+                    <path d="M17.5 8 L21.5 12 L17.5 16" />
+                </svg>
+                <span>Sair</span>
+            </a>
+        </div>
+    </nav>
+</div>
+</html>

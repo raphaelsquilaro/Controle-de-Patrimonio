@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html lang="pt-BR"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Almax - Controle de Estoque</title>
+
+    <style>
+
+        /* =========================================================
+           ALMAX - DESIGN SYSTEM
+           ========================================================= */
+
+        :root {
+            --almax-bg: #121212;
+            --almax-bg-secondary: #1A1A1A;
+            --almax-card: #1C1C1C;
+
+            --almax-border: #262626;
+            --almax-border-light: #333333;
+
+            --almax-accent: #FF6B00;
+            --almax-accent-hover: #E05E00;
+            --almax-accent-soft: rgba(255, 107, 0, 0.10);
+
+            --almax-text: #FFFFFF;
+            --almax-text-primary: #E0E0E0;
+            --almax-text-secondary: #A8A8A8;
+            --almax-text-muted: #7C7C7C;
+
+            --almax-success: #35C759;
+            --almax-success-soft: rgba(53, 199, 89, 0.10);
+
+            --almax-danger: #E74C3C;
+            --almax-danger-soft: rgba(231, 76, 60, 0.10);
+
+            --almax-warning: #FFB020;
+            --almax-warning-soft: rgba(255, 176, 32, 0.10);
+        }
+
+
+        /* =========================================================
+           RESET
+           ========================================================= */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        /* =========================================================
+           BODY
+           ========================================================= */
+
+        body {
+            background-color: var(--almax-bg);
+
+            color: var(--almax-text);
+
+            font-family:
+                    'Segoe UI',
+                    Tahoma,
+                    Geneva,
+                    Verdana,
+                    sans-serif;
+
+            min-height: 100vh;
+
+            display: flex;
+            flex-direction: column;
+        }
+
+
+        /* =========================================================
+           CONTAINER
+           ========================================================= */
+
+        .container {
+            width: 100%;
+            max-width: 1250px;
+
+            margin: 0 auto;
+
+            padding: 2rem 2rem 3rem;
+
+            flex: 1;
+        }
+
+
+        /* =========================================================
+           CABEÇALHO
+           ========================================================= */
+
+        .page-header {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 1.5rem;
+
+            background-color: var(--almax-bg-secondary);
+
+            border: 1px solid var(--almax-border);
+
+            border-left: 4px solid var(--almax-accent);
+
+            border-radius: 8px;
+
+            padding: 1.25rem 1.4rem;
+
+            margin-bottom: 1.5rem;
+
+            box-shadow:
+                    0 8px 24px rgba(0, 0, 0, 0.22);
+        }
+
+
+        .header-info {
+            display: flex;
+
+            align-items: center;
+
+            gap: 0.85rem;
+
+            min-width: 0;
+        }
+
+
+        /* =========================================================
+           ÍCONE
+           ========================================================= */
+
+        .header-icon {
+            width: 44px;
+            height: 44px;
+
+            flex-shrink: 0;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            background-color: var(--almax-accent-soft);
+
+            color: var(--almax-accent);
+
+            border: 1px solid rgba(255, 107, 0, 0.18);
+
+            border-radius: 7px;
+        }
+
+
+        .header-icon svg {
+            width: 22px;
+            height: 22px;
+        }
+
+
+        /* =========================================================
+           TÍTULO
+           ========================================================= */
+
+        .header-info h1 {
+            color: var(--almax-text);
+
+            font-size: 1.35rem;
+
+            font-weight: 700;
+
+            line-height: 1.2;
+        }
+
+
+        .header-info p {
+            color: var(--almax-text-secondary);
+
+            font-size: 0.85rem;
+
+            margin-top: 0.3rem;
+
+            line-height: 1.4;
+        }
+
+
+        /* =========================================================
+           BOTÕES
+           ========================================================= */
+
+        .header-actions {
+            display: flex;
+
+            align-items: center;
+
+            gap: 0.6rem;
+        }
+
+
+        .btn {
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 0.45rem;
+
+            min-height: 38px;
+
+            padding: 0.55rem 0.85rem;
+
+            border-radius: 6px;
+
+            text-decoration: none;
+
+            font-size: 0.79rem;
+
+            font-weight: 600;
+
+            white-space: nowrap;
+
+            transition:
+                    background-color 0.15s ease,
+                    border-color 0.15s ease,
+                    color 0.15s ease,
+                    transform 0.15s ease,
+                    box-shadow 0.15s ease;
+        }
+
+
+        .btn-primary {
+            background-color: var(--almax-accent);
+
+            color: #FFFFFF;
+
+            border: 1px solid var(--almax-accent);
+
+            box-shadow:
+                    0 4px 12px rgba(255, 107, 0, 0.12);
+        }
+
+
+        .btn-primary:hover {
+            background-color: var(--almax-accent-hover);
+
+            border-color: var(--almax-accent-hover);
+
+            transform: translateY(-1px);
+
+            box-shadow:
+                    0 6px 16px rgba(255, 107, 0, 0.18);
+        }
+
+
+        .btn-secondary {
+            background-color: transparent;
+
+            color: var(--almax-text-secondary);
+
+            border: 1px solid var(--almax-border-light);
+        }
+
+
+        .btn-secondary:hover {
+            background-color: #222222;
+
+            color: var(--almax-text);
+
+            border-color: #444444;
+        }
+
+
+        .btn-icon {
+            width: 16px;
+            height: 16px;
+        }
+
+
+        /* =========================================================
+           ALERTA
+           ========================================================= */
+
+        .alert {
+            display: flex;
+
+            align-items: center;
+
+            gap: 0.65rem;
+
+            background-color: var(--almax-success-soft);
+
+            border: 1px solid rgba(53, 199, 89, 0.20);
+
+            color: var(--almax-success);
+
+            padding: 0.75rem 0.9rem;
+
+            border-radius: 6px;
+
+            margin-bottom: 1.25rem;
+
+            font-size: 0.84rem;
+
+            font-weight: 500;
+        }
+
+
+        .alert::before {
+            content: "";
+
+            width: 6px;
+            height: 6px;
+
+            flex-shrink: 0;
+
+            border-radius: 50%;
+
+            background-color: var(--almax-success);
+        }
+
+
+        /* =========================================================
+           TABELA
+           ========================================================= */
+
+        .table-container {
+            width: 100%;
+
+            background-color: var(--almax-card);
+
+            border: 1px solid var(--almax-border);
+
+            border-radius: 8px;
+
+            overflow-x: auto;
+
+            box-shadow:
+                    0 8px 24px rgba(0, 0, 0, 0.18);
+        }
+
+
+        table {
+            width: 100%;
+
+            min-width: 900px;
+
+            border-collapse: collapse;
+
+            text-align: left;
+        }
+
+
+        /* =========================================================
+           CABEÇALHO DA TABELA
+           ========================================================= */
+
+        thead {
+            background-color: var(--almax-bg);
+        }
+
+
+        th {
+            color: var(--almax-text-muted);
+
+            padding: 0.85rem 1rem;
+
+            border-bottom: 1px solid var(--almax-border);
+
+            font-size: 0.70rem;
+
+            font-weight: 600;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.7px;
+
+            white-space: nowrap;
+        }
+
+
+        th:first-child {
+            color: var(--almax-accent);
+        }
+
+
+        th:last-child {
+            text-align: right;
+        }
+
+
+        /* =========================================================
+           CÉLULAS
+           ========================================================= */
+
+        td {
+            padding: 0.9rem 1rem;
+
+            border-bottom: 1px solid var(--almax-border);
+
+            color: var(--almax-text-primary);
+
+            font-size: 0.84rem;
+
+            vertical-align: middle;
+        }
+
+
+        tbody tr {
+            transition:
+                    background-color 0.15s ease;
+        }
+
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+
+        tbody tr:hover {
+            background-color: rgba(255, 255, 255, 0.025);
+        }
+
+
+        /* =========================================================
+           ID
+           ========================================================= */
+
+        .stock-id {
+            color: var(--almax-accent);
+
+            font-family:
+                    'Consolas',
+                    'Courier New',
+                    monospace;
+
+            font-size: 0.78rem;
+
+            font-weight: 600;
+
+            white-space: nowrap;
+        }
+
+
+        .product-id {
+            color: var(--almax-text-muted);
+
+            font-family:
+                    'Consolas',
+                    'Courier New',
+                    monospace;
+
+            font-size: 0.76rem;
+        }
+
+
+        /* =========================================================
+           PRODUTO
+           ========================================================= */
+
+        .product-info {
+            display: flex;
+
+            align-items: center;
+
+            gap: 0.6rem;
+
+            min-width: 180px;
+        }
+
+
+        .product-icon {
+            width: 32px;
+            height: 32px;
+
+            flex-shrink: 0;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            background-color: var(--almax-accent-soft);
+
+            color: var(--almax-accent);
+
+            border: 1px solid rgba(255, 107, 0, 0.15);
+
+            border-radius: 6px;
+        }
+
+
+        .product-icon svg {
+            width: 16px;
+            height: 16px;
+        }
+
+
+        .product-name {
+            color: #D6D6D6;
+
+            font-size: 0.84rem;
+
+            font-weight: 500;
+        }
+
+
+        .no-product {
+            color: var(--almax-text-muted);
+
+            font-size: 0.78rem;
+
+            font-style: italic;
+        }
+
+
+        /* =========================================================
+           CATEGORIA
+           ========================================================= */
+
+        .category {
+            display: inline-flex;
+
+            align-items: center;
+
+            min-height: 28px;
+
+            padding: 0.25rem 0.55rem;
+
+            background-color: #222222;
+
+            color: var(--almax-text-secondary);
+
+            border: 1px solid var(--almax-border);
+
+            border-radius: 5px;
+
+            font-size: 0.75rem;
+
+            white-space: nowrap;
+        }
+
+
+        /* =========================================================
+           QUANTIDADE
+           ========================================================= */
+
+        .quantity {
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            min-width: 48px;
+
+            padding: 0.32rem 0.6rem;
+
+            border-radius: 5px;
+
+            font-family:
+                    'Consolas',
+                    'Courier New',
+                    monospace;
+
+            font-size: 0.79rem;
+
+            font-weight: 700;
+        }
+
+
+        .quantity-normal {
+            background-color: var(--almax-success-soft);
+
+            color: var(--almax-success);
+
+            border: 1px solid rgba(53, 199, 89, 0.15);
+        }
+
+
+        .quantity-low {
+            background-color: var(--almax-danger-soft);
+
+            color: var(--almax-danger);
+
+            border: 1px solid rgba(231, 76, 60, 0.18);
+        }
+
+
+        /* =========================================================
+           AÇÕES
+           ========================================================= */
+
+        .actions {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: flex-end;
+
+            gap: 0.45rem;
+        }
+
+
+        .action {
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            min-height: 32px;
+
+            padding: 0.4rem 0.65rem;
+
+            border-radius: 5px;
+
+            text-decoration: none;
+
+            font-size: 0.73rem;
+
+            font-weight: 600;
+
+            border: 1px solid transparent;
+
+            transition:
+                    background-color 0.15s ease,
+                    border-color 0.15s ease,
+                    color 0.15s ease;
+        }
+
+
+        .action-edit {
+            background-color: var(--almax-accent-soft);
+
+            color: var(--almax-accent);
+
+            border-color: rgba(255, 107, 0, 0.16);
+        }
+
+
+        .action-edit:hover {
+            background-color: rgba(255, 107, 0, 0.18);
+
+            border-color: rgba(255, 107, 0, 0.30);
+        }
+
+
+        .action-delete {
+            background-color: var(--almax-danger-soft);
+
+            color: var(--almax-danger);
+
+            border-color: rgba(231, 76, 60, 0.14);
+        }
+
+
+        .action-delete:hover {
+            background-color: rgba(231, 76, 60, 0.14);
+
+            border-color: rgba(231, 76, 60, 0.28);
+        }
+
+
+        /* =========================================================
+           ESTADO VAZIO
+           ========================================================= */
+
+        .empty-row {
+            text-align: center;
+
+            padding: 3.5rem 1.5rem !important;
+        }
+
+
+        .empty-content {
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 0.45rem;
+        }
+
+
+        .empty-icon {
+            width: 52px;
+            height: 52px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            background-color: var(--almax-accent-soft);
+
+            color: var(--almax-accent);
+
+            border: 1px solid rgba(255, 107, 0, 0.18);
+
+            border-radius: 8px;
+
+            margin-bottom: 0.45rem;
+        }
+
+
+        .empty-icon svg {
+            width: 24px;
+            height: 24px;
+        }
+
+
+        .empty-content strong {
+            color: var(--almax-text);
+
+            font-size: 0.95rem;
+
+            font-weight: 600;
+        }
+
+
+        .empty-content span {
+            color: var(--almax-text-muted);
+
+            font-size: 0.80rem;
+        }
+
+
+        /* =========================================================
+           ACESSIBILIDADE
+           ========================================================= */
+
+        *:focus-visible {
+            outline: 2px solid var(--almax-accent);
+
+            outline-offset: 2px;
+        }
+
+
+        /* =========================================================
+           RESPONSIVIDADE
+           ========================================================= */
+
+        @media (max-width: 850px) {
+
+            .container {
+                padding:
+                        1.5rem
+                        1rem
+                        2.5rem;
+            }
+
+
+            .page-header {
+                align-items: flex-start;
+
+                flex-direction: column;
+            }
+
+
+            .header-actions {
+                width: 100%;
+            }
+
+
+            .header-actions .btn {
+                flex: 1;
+            }
+
+        }
+
+
+        @media (max-width: 500px) {
+
+            .container {
+                padding:
+                        1.25rem
+                        0.75rem
+                        2rem;
+            }
+
+
+            .page-header {
+                padding: 1rem;
+            }
+
+
+            .header-info {
+                gap: 0.7rem;
+            }
+
+
+            .header-icon {
+                width: 40px;
+                height: 40px;
+            }
+
+
+            .header-info h1 {
+                font-size: 1.2rem;
+            }
+
+
+            .header-info p {
+                font-size: 0.78rem;
+            }
+
+
+            .header-actions {
+                flex-direction: column;
+            }
+
+
+            .header-actions .btn {
+                width: 100%;
+            }
+
+        }
+
+
+        /* =========================================================
+           REDUÇÃO DE MOVIMENTO
+           ========================================================= */
+
+        @media (prefers-reduced-motion: reduce) {
+
+            .btn,
+            .action,
+            tbody tr {
+                transition: none;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     NAVBAR
+     ========================================================= -->
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+
+<!-- =========================================================
+     CONTEÚDO
+     ========================================================= -->
+
+<div class="container">
+
+
+    <!-- =====================================================
+         CABEÇALHO
+         ===================================================== -->
+
+    <header class="page-header">
+
+        <div class="header-info">
+
+
+            <!-- ÍCONE DE ESTOQUE -->
+
+            <div class="header-icon">
+
+                <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round">
+
+                    <path d="M3.5 7 L12 3 L20.5 7 L12 11 Z"/>
+
+                    <path d="M3.5 7 L3.5 17 L12 21 L20.5 17 L20.5 7"/>
+
+                    <path d="M12 11 L12 21"/>
+
+                </svg>
+
+            </div>
+
+
+            <div>
+
+                <h1>
+                    Controle de Estoque
+                </h1>
+
+                <p>
+                    Gerencie os produtos e quantidades disponíveis no almoxarifado.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             AÇÕES DO CABEÇALHO
+             ================================================= -->
+
+        <div class="header-actions">
+
+
+            <!-- VOLTAR -->
+
+            <a
+                    th:href="@{/}"
+                    class="btn btn-secondary">
+
+                <svg
+                        class="btn-icon"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round">
+
+                    <path d="M19 12H5"/>
+
+                    <path d="M12 19l-7-7 7-7"/>
+
+                </svg>
+
+                Voltar ao Menu
+
+            </a>
+
+
+            <!-- NOVO ESTOQUE -->
+
+            <a
+                    th:href="@{/estoque/form-cadastro}"
+                    class="btn btn-primary">
+
+                <span>
+                    +
+                </span>
+
+                Novo Estoque
+
+            </a>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         MENSAGEM
+         ===================================================== -->
+
+    <div
+            th:if="${mensagem}"
+            class="alert">
+
+        <span th:text="${mensagem}">
+
+            Mensagem
+
+        </span>
+
+    </div>
+
+
+    <!-- =====================================================
+         TABELA
+         ===================================================== -->
+
+    <main>
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                <tr>
+
+                    <th>
+                        ID Estoque
+                    </th>
+
+                    <th>
+                        ID Produto
+                    </th>
+
+                    <th>
+                        Produto
+                    </th>
+
+                    <th>
+                        Categoria
+                    </th>
+
+                    <th>
+                        Quantidade
+                    </th>
+
+                    <th>
+                        Ações
+                    </th>
+
+                </tr>
+
+                </thead>
+
+
+                <tbody>
+
+
+                <!-- =================================================
+                     ESTOQUES
+                     ================================================= -->
+
+                <tr
+                        th:each="est : ${estoques}">
+
+
+                    <!-- ID ESTOQUE -->
+
+                    <td>
+
+                        <span
+                                class="stock-id"
+                                th:text="${est.id}">
+
+                            1
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- ID PRODUTO -->
+
+                    <td>
+
+                        <span
+                                class="product-id"
+                                th:text="${est.produto != null ? est.produto.id : 'N/A'}">
+
+                            10
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- PRODUTO -->
+
+                    <td>
+
+                        <div
+                                th:if="${est.produto != null}"
+                                class="product-info">
+
+
+                            <div class="product-icon">
+
+                                <svg
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="1.8"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round">
+
+                                    <path d="M3.5 7 L12 3 L20.5 7 L12 11 Z"/>
+
+                                    <path d="M3.5 7 L3.5 17 L12 21 L20.5 17 L20.5 7"/>
+
+                                    <path d="M12 11 L12 21"/>
+
+                                </svg>
+
+                            </div>
+
+
+                            <span
+                                    class="product-name"
+                                    th:text="${est.produto.nome}">
+
+                                Parafuso
+
+                            </span>
+
+                        </div>
+
+
+                        <span
+                                th:unless="${est.produto != null}"
+                                class="no-product">
+
+                            Sem Produto Associado
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- CATEGORIA -->
+
+                    <td>
+
+                        <span
+                                class="category"
+                                th:text="${est.produto != null ? est.produto.categoria : '-'}">
+
+                            Ferragens
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- QUANTIDADE -->
+
+                    <td>
+
+                        <span
+                                th:text="${est.quantidade}"
+                                th:classappend="${est.quantidade <= 5}
+                                    ? 'quantity quantity-low'
+                                    : 'quantity quantity-normal'">
+
+                            100
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- AÇÕES -->
+
+                    <td>
+
+                        <div class="actions">
+
+
+                            <!-- EDITAR -->
+
+                            <a
+                                    th:href="@{/estoque/editar/{id}(id=${est.id})}"
+                                    class="action action-edit">
+
+                                Editar
+
+                            </a>
+
+
+                            <!-- EXCLUIR -->
+
+                            <a
+                                    th:href="@{/estoque/excluir/{id}(id=${est.id})}"
+                                    class="action action-delete"
+                                    onclick="return confirm('Tem certeza que deseja excluir este registro de estoque?');">
+
+                                Excluir
+
+                            </a>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+
+                <!-- =================================================
+                     ESTADO VAZIO
+                     ================================================= -->
+
+                <tr
+                        th:if="${#lists.isEmpty(estoques)}">
+
+                    <td
+                            colspan="6"
+                            class="empty-row">
+
+
+                        <div class="empty-content">
+
+                            <div class="empty-icon">
+
+                                <svg
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="1.8"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round">
+
+                                    <path d="M3.5 7 L12 3 L20.5 7 L12 11 Z"/>
+
+                                    <path d="M3.5 7 L3.5 17 L12 21 L20.5 17 L20.5 7"/>
+
+                                    <path d="M12 11 L12 21"/>
+
+                                </svg>
+
+                            </div>
+
+
+                            <strong>
+                                Nenhum estoque cadastrado
+                            </strong>
+
+
+                            <span>
+                                Ainda não existem registros de estoque no almoxarifado.
+                            </span>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<!-- =========================================================
+     FOOTER
+     ========================================================= -->
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+
+</body>
+
+</html>

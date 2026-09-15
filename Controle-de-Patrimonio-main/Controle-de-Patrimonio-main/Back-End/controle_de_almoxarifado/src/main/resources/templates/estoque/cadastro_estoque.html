@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="pt-BR"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title th:text="${estoque.id != null ? 'Editar Estoque - Almax' : 'Cadastro de Estoque - Almax'}">
+        Cadastro de Estoque - Almax
+    </title>
+
+    <style>
+
+        :root {
+            --almax-bg: #121212;
+            --almax-bg-secondary: #1A1A1A;
+            --almax-card: #1C1C1C;
+
+            --almax-border: #262626;
+            --almax-border-light: #333333;
+
+            --almax-accent: #FF6B00;
+            --almax-accent-hover: #E05E00;
+            --almax-accent-soft: rgba(255, 107, 0, 0.10);
+
+            --almax-text: #FFFFFF;
+            --almax-text-primary: #E0E0E0;
+            --almax-text-secondary: #A8A8A8;
+            --almax-text-muted: #7C7C7C;
+
+            --almax-success: #35C759;
+        }
+
+
+        /* =========================================================
+           RESET
+           ========================================================= */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        /* =========================================================
+           BODY
+           ========================================================= */
+
+        body {
+            min-height: 100vh;
+
+            display: flex;
+            flex-direction: column;
+
+            background-color: var(--almax-bg);
+
+            color: var(--almax-text);
+
+            font-family:
+                    'Segoe UI',
+                    Tahoma,
+                    Geneva,
+                    Verdana,
+                    sans-serif;
+        }
+
+
+        /* =========================================================
+           CONTAINER
+           ========================================================= */
+
+        .page-container {
+            width: 100%;
+            max-width: 760px;
+
+            margin: 0 auto;
+
+            padding: 2.5rem 1.5rem 3rem;
+
+            flex: 1;
+        }
+
+
+        /* =========================================================
+           CARD
+           ========================================================= */
+
+        .form-card {
+            width: 100%;
+
+            background-color: var(--almax-card);
+
+            border: 1px solid var(--almax-border);
+
+            border-radius: 8px;
+
+            overflow: hidden;
+
+            box-shadow:
+                    0 12px 32px rgba(0, 0, 0, 0.25);
+        }
+
+
+        /* =========================================================
+           HEADER
+           ========================================================= */
+
+        .card-header {
+            display: flex;
+
+            align-items: center;
+
+            gap: 0.9rem;
+
+            padding: 1.35rem 1.5rem;
+
+            background-color: var(--almax-bg-secondary);
+
+            border-bottom: 1px solid var(--almax-border);
+
+            border-left: 4px solid var(--almax-accent);
+        }
+
+
+        .header-icon {
+            width: 46px;
+            height: 46px;
+
+            flex-shrink: 0;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            background-color: var(--almax-accent-soft);
+
+            color: var(--almax-accent);
+
+            border: 1px solid rgba(255, 107, 0, 0.18);
+
+            border-radius: 7px;
+        }
+
+
+        .header-icon svg {
+            width: 23px;
+            height: 23px;
+        }
+
+
+        .header-content h1 {
+            color: var(--almax-text);
+
+            font-size: 1.35rem;
+
+            font-weight: 700;
+
+            line-height: 1.2;
+        }
+
+
+        .header-content p {
+            margin-top: 0.3rem;
+
+            color: var(--almax-text-secondary);
+
+            font-size: 0.84rem;
+
+            line-height: 1.4;
+        }
+
+
+        /* =========================================================
+           FORM
+           ========================================================= */
+
+        form {
+            padding: 1.5rem;
+        }
+
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+
+        label {
+            display: block;
+
+            margin-bottom: 0.45rem;
+
+            color: var(--almax-text-primary);
+
+            font-size: 0.79rem;
+
+            font-weight: 600;
+        }
+
+
+        .required {
+            color: var(--almax-accent);
+
+            margin-left: 2px;
+        }
+
+
+        /* =========================================================
+           INPUTS
+           ========================================================= */
+
+        input,
+        select {
+            width: 100%;
+
+            height: 42px;
+
+            padding: 0.65rem 0.8rem;
+
+            background-color: #151515;
+
+            color: var(--almax-text-primary);
+
+            border: 1px solid var(--almax-border-light);
+
+            border-radius: 6px;
+
+            outline: none;
+
+            font-family: inherit;
+
+            font-size: 0.84rem;
+
+            transition:
+                    border-color 0.15s ease,
+                    box-shadow 0.15s ease,
+                    background-color 0.15s ease;
+        }
+
+
+        input:hover,
+        select:hover {
+            border-color: #444444;
+        }
+
+
+        input:focus,
+        select:focus {
+            background-color: #181818;
+
+            border-color: var(--almax-accent);
+
+            box-shadow:
+                    0 0 0 3px rgba(255, 107, 0, 0.10);
+        }
+
+
+        input::placeholder {
+            color: #5F5F5F;
+        }
+
+
+        /* =========================================================
+           SELECT
+           ========================================================= */
+
+        select {
+            cursor: pointer;
+
+            appearance: none;
+
+            padding-right: 2.2rem;
+
+            background-image:
+                    linear-gradient(
+                            45deg,
+                            transparent 50%,
+                            #777 50%
+                    ),
+                    linear-gradient(
+                            135deg,
+                            #777 50%,
+                            transparent 50%
+                    );
+
+            background-position:
+                    calc(100% - 17px) 18px,
+                    calc(100% - 12px) 18px;
+
+            background-size:
+                    5px 5px,
+                    5px 5px;
+
+            background-repeat: no-repeat;
+        }
+
+
+        select option {
+            background-color: #1C1C1C;
+
+            color: var(--almax-text-primary);
+        }
+
+
+        /* =========================================================
+           DICAS DOS CAMPOS
+           ========================================================= */
+
+        .field-hint {
+            display: block;
+
+            margin-top: 0.4rem;
+
+            color: var(--almax-text-muted);
+
+            font-size: 0.72rem;
+        }
+
+
+        /* =========================================================
+           INFORMAÇÃO
+           ========================================================= */
+
+        .info-box {
+            display: flex;
+
+            align-items: flex-start;
+
+            gap: 0.7rem;
+
+            margin-top: 1.35rem;
+
+            padding: 0.85rem 0.9rem;
+
+            background-color: var(--almax-accent-soft);
+
+            border: 1px solid rgba(255, 107, 0, 0.16);
+
+            border-radius: 6px;
+        }
+
+
+        .info-icon {
+            width: 18px;
+            height: 18px;
+
+            flex-shrink: 0;
+
+            color: var(--almax-accent);
+        }
+
+
+        .info-icon svg {
+            width: 17px;
+            height: 17px;
+        }
+
+
+        .info-content strong {
+            display: block;
+
+            color: var(--almax-text-primary);
+
+            font-size: 0.76rem;
+
+            font-weight: 600;
+
+            margin-bottom: 0.2rem;
+        }
+
+
+        .info-content p {
+            color: var(--almax-text-secondary);
+
+            font-size: 0.74rem;
+
+            line-height: 1.45;
+        }
+
+
+        /* =========================================================
+           AÇÕES
+           ========================================================= */
+
+        .form-actions {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: flex-end;
+
+            gap: 0.65rem;
+
+            margin-top: 1.5rem;
+
+            padding-top: 1.25rem;
+
+            border-top: 1px solid var(--almax-border);
+        }
+
+
+        .btn {
+            min-height: 40px;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 0.45rem;
+
+            padding: 0.6rem 1rem;
+
+            border-radius: 6px;
+
+            font-family: inherit;
+
+            font-size: 0.79rem;
+
+            font-weight: 600;
+
+            text-decoration: none;
+
+            cursor: pointer;
+
+            transition:
+                    background-color 0.15s ease,
+                    border-color 0.15s ease,
+                    color 0.15s ease,
+                    transform 0.15s ease,
+                    box-shadow 0.15s ease;
+        }
+
+
+        /* =========================================================
+           CANCELAR
+           ========================================================= */
+
+        .btn-cancel {
+            background-color: transparent;
+
+            color: var(--almax-text-secondary);
+
+            border: 1px solid var(--almax-border-light);
+        }
+
+
+        .btn-cancel:hover {
+            background-color: #222222;
+
+            color: var(--almax-text);
+
+            border-color: #444444;
+        }
+
+
+        /* =========================================================
+           SALVAR
+           ========================================================= */
+
+        .btn-save {
+            background-color: var(--almax-accent);
+
+            color: #FFFFFF;
+
+            border: 1px solid var(--almax-accent);
+
+            box-shadow:
+                    0 4px 12px rgba(255, 107, 0, 0.12);
+        }
+
+
+        .btn-save:hover {
+            background-color: var(--almax-accent-hover);
+
+            border-color: var(--almax-accent-hover);
+
+            transform: translateY(-1px);
+
+            box-shadow:
+                    0 6px 16px rgba(255, 107, 0, 0.18);
+        }
+
+
+        .btn-icon {
+            width: 16px;
+            height: 16px;
+        }
+
+
+        /* =========================================================
+           FOCO
+           ========================================================= */
+
+        *:focus-visible {
+            outline: 2px solid var(--almax-accent);
+
+            outline-offset: 2px;
+        }
+
+
+        /* =========================================================
+           RESPONSIVIDADE
+           ========================================================= */
+
+        @media (max-width: 600px) {
+
+            .page-container {
+                padding:
+                        1.5rem
+                        0.85rem
+                        2rem;
+            }
+
+
+            .card-header {
+                padding: 1.1rem;
+            }
+
+
+            .header-icon {
+                width: 40px;
+                height: 40px;
+            }
+
+
+            .header-content h1 {
+                font-size: 1.15rem;
+            }
+
+
+            .header-content p {
+                font-size: 0.77rem;
+            }
+
+
+            form {
+                padding: 1.1rem;
+            }
+
+
+            .form-actions {
+                flex-direction: column-reverse;
+
+                align-items: stretch;
+            }
+
+
+            .form-actions .btn {
+                width: 100%;
+            }
+
+        }
+
+
+        @media (prefers-reduced-motion: reduce) {
+
+            input,
+            select,
+            .btn {
+                transition: none;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     NAVBAR
+     ========================================================= -->
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+
+<!-- =========================================================
+     CONTEÚDO
+     ========================================================= -->
+
+<main class="page-container">
+
+    <section class="form-card">
+
+
+        <!-- =====================================================
+             CABEÇALHO
+             ===================================================== -->
+
+        <header class="card-header">
+
+            <div class="header-icon">
+
+                <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round">
+
+                    <path d="M3.5 7 L12 3 L20.5 7 L12 11"/>
+
+                    <path d="M3.5 7 V17 L12 21 L20.5 17 V7"/>
+
+                    <path d="M12 11 V21"/>
+
+                </svg>
+
+            </div>
+
+
+            <div class="header-content">
+
+                <h1
+                        th:text="${estoque.id != null}
+                            ? 'Editar Estoque'
+                            : 'Cadastro de Estoque'">
+
+                    Cadastro de Estoque
+
+                </h1>
+
+
+                <p>
+                    Informe os dados do estoque e o produto associado.
+                </p>
+
+            </div>
+
+        </header>
+
+
+        <!-- =====================================================
+             FORMULÁRIO
+             ===================================================== -->
+
+        <form
+                th:action="@{/estoque/salvar}"
+                th:object="${estoque}"
+                method="post">
+
+
+            <!-- ID NECESSÁRIO PARA EDIÇÃO -->
+
+            <input
+                    type="hidden"
+                    th:field="*{id}">
+
+
+            <!-- =================================================
+                 QUANTIDADE
+                 ================================================= -->
+
+            <div class="form-group">
+
+                <label for="quantidade">
+
+                    Quantidade
+
+                    <span class="required">*</span>
+
+                </label>
+
+
+                <input
+                        id="quantidade"
+                        type="number"
+                        min="0"
+                        max="99"
+                        step="1"
+                        th:field="*{quantidade}"
+                        placeholder="Ex: 25"
+                        required>
+
+
+                <span class="field-hint">
+                    Informe uma quantidade entre 0 e 99 unidades.
+                </span>
+
+            </div>
+
+
+            <!-- =================================================
+                 PRODUTO
+                 ================================================= -->
+
+            <div class="form-group">
+
+                <label for="produto">
+
+                    Produto
+
+                    <span class="required">*</span>
+
+                </label>
+
+
+                <select
+                        id="produto"
+                        th:field="*{produto.id}"
+                        required>
+
+
+                    <option
+                            value=""
+                            disabled
+                            th:selected="${estoque.produto == null || estoque.produto.id == null}">
+
+                        Selecione um produto
+
+                    </option>
+
+
+                    <option
+                            th:each="produto : ${produtos}"
+                            th:value="${produto.id}"
+                            th:text="${produto.nome}">
+
+                        Produto
+
+                    </option>
+
+                </select>
+
+
+                <span class="field-hint">
+                    Selecione o produto ao qual este estoque pertence.
+                </span>
+
+            </div>
+
+
+            <!-- =================================================
+                 INFORMAÇÃO
+                 ================================================= -->
+
+            <div class="info-box">
+
+
+                <div class="info-icon">
+
+                    <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                            stroke-linejoin="round">
+
+                        <circle
+                                cx="12"
+                                cy="12"
+                                r="9"/>
+
+                        <path d="M12 10 V16"/>
+
+                        <path d="M12 7 H12.01"/>
+
+                    </svg>
+
+                </div>
+
+
+                <div class="info-content">
+
+                    <strong>
+                        Controle de estoque
+                    </strong>
+
+                    <p>
+                        A quantidade representa o saldo atual disponível
+                        para o produto selecionado no almoxarifado.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 BOTÕES
+                 ================================================= -->
+
+            <div class="form-actions">
+
+
+                <!-- CANCELAR -->
+
+                <a
+                        th:href="@{/estoque/listar}"
+                        class="btn btn-cancel">
+
+                    <svg
+                            class="btn-icon"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                            stroke-linejoin="round">
+
+                        <path d="M19 12 H5"/>
+
+                        <path d="M12 19 L5 12 L12 5"/>
+
+                    </svg>
+
+                    Cancelar
+
+                </a>
+
+
+                <!-- SALVAR -->
+
+                <button
+                        type="submit"
+                        class="btn btn-save">
+
+                    <svg
+                            class="btn-icon"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                            stroke-linejoin="round">
+
+                        <path d="M5 4 H17 L19 6 V20 H5 Z"/>
+
+                        <path d="M8 4 V10 H16 V4"/>
+
+                        <path d="M8 20 V14 H16 V20"/>
+
+                    </svg>
+
+                    Salvar Estoque
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </section>
+
+</main>
+
+
+<!-- =========================================================
+     FOOTER
+     ========================================================= -->
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+
+</body>
+
+</html>

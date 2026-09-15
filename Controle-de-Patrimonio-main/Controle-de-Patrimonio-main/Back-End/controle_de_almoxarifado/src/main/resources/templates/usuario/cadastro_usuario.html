@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="pt-BR"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title
+            th:text="${usuario.id == null ? 'Cadastrar Usuário' : 'Editar Usuário'}">
+        Cadastrar Usuário
+    </title>
+
+    <link rel="stylesheet"
+          th:href="@{/cadastro-usuario.css}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <!-- =========================
+             CABEÇALHO
+             ========================= -->
+
+        <div class="card-header">
+
+            <div class="icon">
+                👤
+            </div>
+
+            <div>
+
+                <h1
+                        th:text="${usuario.id == null
+                        ? 'Cadastrar Usuário'
+                        : 'Editar Usuário'}">
+
+                    Cadastrar Usuário
+
+                </h1>
+
+                <p>
+                    Cadastre um usuário para acessar o sistema.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             FORMULÁRIO
+             ========================= -->
+
+        <form
+                th:action="@{/usuario/salvar}"
+                th:object="${usuario}"
+                method="post">
+
+
+            <!-- ID -->
+
+            <input
+                    type="hidden"
+                    th:field="*{id}">
+
+
+            <!-- =========================
+                 NOME
+                 ========================= -->
+
+            <div class="form-group">
+
+                <label for="nome">
+                    Nome completo
+                </label>
+
+                <input
+                        type="text"
+                        id="nome"
+                        th:field="*{nome}"
+                        placeholder="Ex: João da Silva"
+                        autocomplete="name"
+                        required
+                >
+
+                <span
+                        class="error"
+                        th:if="${#fields.hasErrors('nome')}"
+                        th:errors="*{nome}">
+                </span>
+
+            </div>
+
+
+            <!-- =========================
+                 E-MAIL
+                 ========================= -->
+
+            <div class="form-group">
+
+                <label for="email">
+                    E-mail
+                </label>
+
+                <input
+                        type="email"
+                        id="email"
+                        th:field="*{email}"
+                        placeholder="Ex: joao@email.com"
+                        autocomplete="email"
+                        required
+                >
+
+                <span
+                        class="error"
+                        th:if="${#fields.hasErrors('email')}"
+                        th:errors="*{email}">
+                </span>
+
+            </div>
+
+
+            <!-- =========================
+                 SENHA
+                 ========================= -->
+
+            <div class="form-group">
+
+                <label for="senha">
+                    Senha
+                </label>
+
+                <input
+                        type="password"
+                        id="senha"
+                        th:field="*{senha}"
+                        placeholder="Digite a senha"
+                        autocomplete="new-password"
+                        required
+                >
+
+                <small class="help-text">
+                    Informe uma senha para acesso ao sistema.
+                </small>
+
+                <span
+                        class="error"
+                        th:if="${#fields.hasErrors('senha')}"
+                        th:errors="*{senha}">
+                </span>
+
+            </div>
+
+
+            <!-- =========================
+                 NÍVEL DE ACESSO
+                 ========================= -->
+
+            <div class="form-group">
+
+                <label for="nivelAcesso">
+                    Nível de acesso
+                </label>
+
+                <select
+                        id="nivelAcesso"
+                        th:field="*{nivelAcesso}"
+                        required>
+
+                    <option value="">
+                        Selecione o nível de acesso
+                    </option>
+
+                    <option
+                            th:each="nivel : ${niveisAcesso}"
+                            th:value="${nivel}"
+                            th:text="${nivel}">
+                    </option>
+
+                </select>
+
+                <small class="help-text">
+                    Define as permissões que o usuário terá no sistema.
+                </small>
+
+                <span
+                        class="error"
+                        th:if="${#fields.hasErrors('nivelAcesso')}"
+                        th:errors="*{nivelAcesso}">
+                </span>
+
+            </div>
+
+
+            <!-- =========================
+                 INFORMAÇÃO
+                 ========================= -->
+
+            <div class="info-box">
+
+                <div class="info-icon">
+                    i
+                </div>
+
+                <div>
+
+                    <strong>
+                        Nível de acesso
+                    </strong>
+
+                    <p>
+                        Escolha o nível de acesso de acordo com as
+                        responsabilidades do usuário no almoxarifado.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 BOTÕES
+                 ========================= -->
+
+            <div class="form-actions">
+
+                <a
+                        th:href="@{/usuario/listar}"
+                        class="btn btn-cancelar">
+
+                    Cancelar
+
+                </a>
+
+                <button
+                        type="submit"
+                        class="btn btn-salvar">
+
+                    Salvar usuário
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

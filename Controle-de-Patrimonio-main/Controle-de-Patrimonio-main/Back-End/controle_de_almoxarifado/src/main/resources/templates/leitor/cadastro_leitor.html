@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="pt-BR"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title th:text="${leitorRFID.id == null ? 'Cadastrar Leitor RFID' : 'Editar Leitor RFID'}">
+        Cadastrar Leitor RFID
+    </title>
+
+    <style>
+
+        /* =========================================================
+           ALMAX - DESIGN SYSTEM
+           ========================================================= */
+
+        :root {
+            --almax-bg: #121212;
+            --almax-bg-secondary: #1A1A1A;
+            --almax-card: #1C1C1C;
+
+            --almax-border: #262626;
+            --almax-border-light: #333333;
+            --almax-border-input: #444444;
+
+            --almax-accent: #FF6B00;
+            --almax-accent-hover: #E05E00;
+            --almax-accent-soft: rgba(255, 107, 0, 0.10);
+
+            --almax-text: #FFFFFF;
+            --almax-text-primary: #E0E0E0;
+            --almax-text-secondary: #A8A8A8;
+            --almax-text-muted: #7C7C7C;
+
+            --almax-online: #35C759;
+            --almax-online-soft: rgba(53, 199, 89, 0.10);
+
+            --almax-offline: #E74C3C;
+            --almax-offline-soft: rgba(231, 76, 60, 0.10);
+        }
+
+
+        /* =========================================================
+           RESET
+           ========================================================= */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        /* =========================================================
+           BODY
+           ========================================================= */
+
+        body {
+            background-color: var(--almax-bg);
+
+            color: var(--almax-text);
+
+            font-family:
+                    'Segoe UI',
+                    Tahoma,
+                    Geneva,
+                    Verdana,
+                    sans-serif;
+
+            min-height: 100vh;
+
+            display: flex;
+            flex-direction: column;
+        }
+
+
+        /* =========================================================
+           MAIN CONTAINER
+           ========================================================= */
+
+        .container {
+            width: 100%;
+            max-width: 1250px;
+
+            margin: 0 auto;
+
+            padding: 2rem;
+
+            flex: 1;
+
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+        }
+
+
+        /* =========================================================
+           CARD
+           ========================================================= */
+
+        .card {
+            width: 100%;
+            max-width: 620px;
+
+            background-color: var(--almax-card);
+
+            border: 1px solid var(--almax-border);
+
+            border-radius: 8px;
+
+            overflow: hidden;
+
+            box-shadow:
+                    0 12px 32px rgba(0, 0, 0, 0.25);
+        }
+
+
+        /* =========================================================
+           CARD HEADER
+           ========================================================= */
+
+        .card-header {
+            display: flex;
+
+            align-items: center;
+
+            gap: 0.85rem;
+
+            padding: 1.4rem;
+
+            background-color: var(--almax-bg-secondary);
+
+            border-bottom: 1px solid var(--almax-border);
+
+            border-left: 4px solid var(--almax-accent);
+        }
+
+
+        /* =========================================================
+           ÍCONE
+           ========================================================= */
+
+        .card-header .icon {
+            width: 44px;
+            height: 44px;
+
+            flex-shrink: 0;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            background-color: var(--almax-accent-soft);
+
+            color: var(--almax-accent);
+
+            border: 1px solid rgba(255, 107, 0, 0.18);
+
+            border-radius: 7px;
+        }
+
+
+        .card-header .icon svg {
+            width: 22px;
+            height: 22px;
+        }
+
+
+        /* =========================================================
+           TÍTULO
+           ========================================================= */
+
+        .card-header h1 {
+            color: var(--almax-text);
+
+            font-size: 1.3rem;
+
+            font-weight: 700;
+
+            line-height: 1.25;
+        }
+
+
+        .card-header p {
+            color: var(--almax-text-secondary);
+
+            font-size: 0.84rem;
+
+            line-height: 1.4;
+
+            margin-top: 0.3rem;
+        }
+
+
+        /* =========================================================
+           FORMULÁRIO
+           ========================================================= */
+
+        form {
+            padding: 1.5rem;
+        }
+
+
+        /* =========================================================
+           GRUPOS
+           ========================================================= */
+
+        .form-group {
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 0.45rem;
+
+            margin-bottom: 1.15rem;
+        }
+
+
+        /* =========================================================
+           LABEL
+           ========================================================= */
+
+        label {
+            color: var(--almax-text-primary);
+
+            font-size: 0.80rem;
+
+            font-weight: 600;
+
+            letter-spacing: 0.1px;
+        }
+
+
+        /* =========================================================
+           INPUTS / SELECT
+           ========================================================= */
+
+        input,
+        select {
+            width: 100%;
+
+            min-height: 42px;
+
+            padding: 0.65rem 0.75rem;
+
+            background-color: #171717;
+
+            color: var(--almax-text);
+
+            border: 1px solid var(--almax-border-input);
+
+            border-radius: 6px;
+
+            font-family: inherit;
+
+            font-size: 0.84rem;
+
+            outline: none;
+
+            transition:
+                    border-color 0.15s ease,
+                    box-shadow 0.15s ease,
+                    background-color 0.15s ease;
+        }
+
+
+        input::placeholder {
+            color: #666666;
+        }
+
+
+        input:hover,
+        select:hover {
+            border-color: #555555;
+        }
+
+
+        input:focus,
+        select:focus {
+            background-color: #1A1A1A;
+
+            border-color: var(--almax-accent);
+
+            box-shadow:
+                    0 0 0 3px rgba(255, 107, 0, 0.08);
+        }
+
+
+        /* =========================================================
+           SELECT
+           ========================================================= */
+
+        select {
+            cursor: pointer;
+
+            appearance: none;
+
+            background-image:
+                    linear-gradient(45deg, transparent 50%, #888 50%),
+                    linear-gradient(135deg, #888 50%, transparent 50%);
+
+            background-position:
+                    calc(100% - 16px) 18px,
+                    calc(100% - 11px) 18px;
+
+            background-size:
+                    5px 5px,
+                    5px 5px;
+
+            background-repeat: no-repeat;
+
+            padding-right: 2.2rem;
+        }
+
+
+        select option {
+            background-color: #1C1C1C;
+
+            color: #FFFFFF;
+        }
+
+
+        /* =========================================================
+           STATUS VISUAL
+           ========================================================= */
+
+        #online {
+            color: var(--almax-text-primary);
+        }
+
+
+        /* =========================================================
+           BOTÃO
+           ========================================================= */
+
+        button {
+            width: 100%;
+
+            min-height: 42px;
+
+            margin-top: 0.35rem;
+
+            padding: 0.65rem 1rem;
+
+            background-color: var(--almax-accent);
+
+            color: #FFFFFF;
+
+            border: 1px solid var(--almax-accent);
+
+            border-radius: 6px;
+
+            font-family: inherit;
+
+            font-size: 0.82rem;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition:
+                    background-color 0.15s ease,
+                    border-color 0.15s ease,
+                    transform 0.15s ease,
+                    box-shadow 0.15s ease;
+        }
+
+
+        button:hover {
+            background-color: var(--almax-accent-hover);
+
+            border-color: var(--almax-accent-hover);
+
+            transform: translateY(-1px);
+
+            box-shadow:
+                    0 6px 16px rgba(255, 107, 0, 0.18);
+        }
+
+
+        button:active {
+            transform: translateY(0);
+        }
+
+
+        /* =========================================================
+           ACESSIBILIDADE
+           ========================================================= */
+
+        *:focus-visible {
+            outline: 2px solid var(--almax-accent);
+
+            outline-offset: 2px;
+        }
+
+
+        /* =========================================================
+           RESPONSIVIDADE
+           ========================================================= */
+
+        @media (max-width: 700px) {
+
+            .container {
+                padding:
+                        1.5rem
+                        1rem
+                        2.5rem;
+            }
+
+        }
+
+
+        @media (max-width: 500px) {
+
+            .container {
+                padding:
+                        1rem
+                        0.75rem
+                        2rem;
+            }
+
+
+            .card-header {
+                padding: 1.1rem;
+            }
+
+
+            .card-header .icon {
+                width: 40px;
+                height: 40px;
+            }
+
+
+            .card-header h1 {
+                font-size: 1.15rem;
+            }
+
+
+            .card-header p {
+                font-size: 0.78rem;
+            }
+
+
+            form {
+                padding: 1.15rem;
+            }
+
+        }
+
+
+        /* =========================================================
+           REDUÇÃO DE MOVIMENTO
+           ========================================================= */
+
+        @media (prefers-reduced-motion: reduce) {
+
+            input,
+            select,
+            button {
+                transition: none;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     NAVBAR
+     ========================================================= -->
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+
+<!-- =========================================================
+     CONTEÚDO
+     ========================================================= -->
+
+<div class="container">
+
+    <div class="card">
+
+
+        <!-- =====================================================
+             CABEÇALHO
+             ===================================================== -->
+
+        <div class="card-header">
+
+
+            <!-- ÍCONE RFID -->
+
+            <div class="icon">
+
+                <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round">
+
+                    <rect
+                            x="3"
+                            y="7"
+                            width="5"
+                            height="10"
+                            rx="1"/>
+
+                    <path d="M12 9.5c1.4 1.4 1.4 3.6 0 5"/>
+
+                    <path d="M15 7c2.8 2.8 2.8 7.2 0 10"/>
+
+                    <path d="M18 4.5c4.2 4.2 4.2 10.8 0 15"/>
+
+                </svg>
+
+            </div>
+
+
+            <div>
+
+                <h1
+                        th:text="${leitorRFID.id == null
+                        ? 'Cadastrar Leitor RFID'
+                        : 'Editar Leitor RFID'}">
+
+                    Cadastrar Leitor RFID
+
+                </h1>
+
+
+                <p>
+                    Cadastre as informações do leitor RFID do almoxarifado.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             FORMULÁRIO
+             ===================================================== -->
+
+        <form
+                th:action="@{/leitor/salvar}"
+                th:object="${leitorRFID}"
+                method="post">
+
+
+            <!-- ID -->
+
+            <input
+                    type="hidden"
+                    th:field="*{id}">
+
+
+            <!-- =================================================
+                 NOME
+                 ================================================= -->
+
+            <div class="form-group">
+
+                <label for="nome">
+                    Nome do leitor
+                </label>
+
+
+                <input
+                        type="text"
+                        id="nome"
+                        th:field="*{nome}"
+                        placeholder="Ex: Leitor RFID Entrada"
+                        required>
+
+            </div>
+
+
+            <!-- =================================================
+                 LOCALIZAÇÃO
+                 ================================================= -->
+
+            <div class="form-group">
+
+                <label for="localizacao">
+                    Localização
+                </label>
+
+
+                <input
+                        type="text"
+                        id="localizacao"
+                        th:field="*{localizacao}"
+                        placeholder="Ex: Entrada do Almoxarifado"
+                        required>
+
+            </div>
+
+
+            <!-- =================================================
+                 STATUS
+                 ================================================= -->
+
+            <div class="form-group">
+
+                <label for="online">
+                    Status
+                </label>
+
+
+                <select
+                        id="online"
+                        th:field="*{online}"
+                        required>
+
+                    <option value="">
+                        Selecione o status
+                    </option>
+
+                    <option value="true">
+                        Online
+                    </option>
+
+                    <option value="false">
+                        Offline
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- =================================================
+                 SALVAR
+                 ================================================= -->
+
+            <button type="submit">
+                Salvar leitor
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     FOOTER
+     ========================================================= -->
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+
+</body>
+
+</html>

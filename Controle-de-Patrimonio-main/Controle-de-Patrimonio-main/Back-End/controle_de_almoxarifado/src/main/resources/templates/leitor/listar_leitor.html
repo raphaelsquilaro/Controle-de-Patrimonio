@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="pt-BR"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Almax - Leitores RFID</title>
+
+    <style>
+
+        /* =========================================================
+           ALMAX - DESIGN SYSTEM
+           ========================================================= */
+
+        :root {
+            --almax-bg: #121212;
+            --almax-bg-secondary: #1A1A1A;
+            --almax-card: #1C1C1C;
+
+            --almax-border: #262626;
+            --almax-border-light: #333333;
+
+            --almax-accent: #FF6B00;
+            --almax-accent-hover: #E05E00;
+            --almax-accent-soft: rgba(255, 107, 0, 0.10);
+
+            --almax-text: #FFFFFF;
+            --almax-text-primary: #E0E0E0;
+            --almax-text-secondary: #A8A8A8;
+            --almax-text-muted: #7C7C7C;
+
+            --almax-online: #35C759;
+            --almax-online-soft: rgba(53, 199, 89, 0.10);
+
+            --almax-offline: #E74C3C;
+            --almax-offline-soft: rgba(231, 76, 60, 0.10);
+        }
+
+
+        /* =========================================================
+           RESET
+           ========================================================= */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        /* =========================================================
+           BODY
+           ========================================================= */
+
+        body {
+            background-color: var(--almax-bg);
+
+            color: var(--almax-text);
+
+            font-family:
+                    'Segoe UI',
+                    Tahoma,
+                    Geneva,
+                    Verdana,
+                    sans-serif;
+
+            min-height: 100vh;
+
+            display: flex;
+            flex-direction: column;
+        }
+
+
+        /* =========================================================
+           CONTAINER
+           ========================================================= */
+
+        .container {
+            width: 100%;
+            max-width: 1250px;
+
+            margin: 0 auto;
+
+            padding: 2rem 2rem 3rem;
+
+            flex: 1;
+        }
+
+
+        /* =========================================================
+           CABEÇALHO
+           ========================================================= */
+
+        .page-header {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 1.5rem;
+
+            background-color: var(--almax-bg-secondary);
+
+            border: 1px solid var(--almax-border);
+
+            border-left: 4px solid var(--almax-accent);
+
+            border-radius: 8px;
+
+            padding: 1.25rem 1.4rem;
+
+            margin-bottom: 1.5rem;
+
+            box-shadow:
+                    0 8px 24px rgba(0, 0, 0, 0.22);
+        }
+
+
+        .header-info {
+            display: flex;
+
+            align-items: center;
+
+            gap: 0.85rem;
+
+            min-width: 0;
+        }
+
+
+        /* =========================================================
+           ÍCONE DO CABEÇALHO
+           ========================================================= */
+
+        .header-info .icon {
+            width: 42px;
+            height: 42px;
+
+            flex-shrink: 0;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background-color: var(--almax-accent-soft);
+
+            color: var(--almax-accent);
+
+            border: 1px solid rgba(255, 107, 0, 0.18);
+
+            border-radius: 7px;
+        }
+
+
+        .header-info .icon svg {
+            width: 21px;
+            height: 21px;
+        }
+
+
+        /* =========================================================
+           TÍTULO
+           ========================================================= */
+
+        .header-info h1 {
+            color: var(--almax-text);
+
+            font-size: 1.35rem;
+
+            font-weight: 700;
+
+            line-height: 1.2;
+        }
+
+
+        .header-info p {
+            color: var(--almax-text-secondary);
+
+            font-size: 0.85rem;
+
+            margin-top: 0.3rem;
+
+            line-height: 1.4;
+        }
+
+
+        /* =========================================================
+           BOTÕES
+           ========================================================= */
+
+        .btn {
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 0.5rem;
+
+            min-height: 38px;
+
+            padding: 0.55rem 0.9rem;
+
+            border-radius: 6px;
+
+            text-decoration: none;
+
+            font-size: 0.80rem;
+
+            font-weight: 600;
+
+            white-space: nowrap;
+
+            transition:
+                    background-color 0.15s ease,
+                    border-color 0.15s ease,
+                    transform 0.15s ease,
+                    box-shadow 0.15s ease;
+        }
+
+
+        .btn-primary {
+            background-color: var(--almax-accent);
+
+            color: #FFFFFF;
+
+            border: 1px solid var(--almax-accent);
+
+            box-shadow:
+                    0 4px 12px rgba(255, 107, 0, 0.12);
+        }
+
+
+        .btn-primary:hover {
+            background-color: var(--almax-accent-hover);
+
+            border-color: var(--almax-accent-hover);
+
+            transform: translateY(-1px);
+
+            box-shadow:
+                    0 6px 16px rgba(255, 107, 0, 0.18);
+        }
+
+
+        .btn-primary > span {
+            font-size: 1.15rem;
+
+            line-height: 1;
+
+            font-weight: 400;
+        }
+
+
+        /* =========================================================
+           ALERTA
+           ========================================================= */
+
+        .alert {
+            display: flex;
+
+            align-items: center;
+
+            gap: 0.65rem;
+
+            background-color: var(--almax-accent-soft);
+
+            border: 1px solid rgba(255, 107, 0, 0.30);
+
+            color: var(--almax-accent);
+
+            padding: 0.75rem 0.9rem;
+
+            border-radius: 6px;
+
+            margin-bottom: 1.25rem;
+
+            font-size: 0.84rem;
+
+            font-weight: 500;
+        }
+
+
+        .alert::before {
+            content: "";
+
+            width: 6px;
+            height: 6px;
+
+            flex-shrink: 0;
+
+            border-radius: 50%;
+
+            background-color: var(--almax-accent);
+        }
+
+
+        /* =========================================================
+           TABELA
+           ========================================================= */
+
+        .table-container {
+            width: 100%;
+
+            background-color: var(--almax-card);
+
+            border: 1px solid var(--almax-border);
+
+            border-radius: 8px;
+
+            overflow-x: auto;
+
+            box-shadow:
+                    0 8px 24px rgba(0, 0, 0, 0.18);
+        }
+
+
+        table {
+            width: 100%;
+
+            min-width: 760px;
+
+            border-collapse: collapse;
+
+            text-align: left;
+        }
+
+
+        /* =========================================================
+           CABEÇALHO DA TABELA
+           ========================================================= */
+
+        th {
+            background-color: var(--almax-bg);
+
+            color: var(--almax-text-muted);
+
+            padding: 0.85rem 1rem;
+
+            border-bottom: 1px solid var(--almax-border);
+
+            font-size: 0.70rem;
+
+            font-weight: 600;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.7px;
+
+            white-space: nowrap;
+        }
+
+
+        th:first-child {
+            color: var(--almax-accent);
+        }
+
+
+        .actions-column {
+            text-align: right;
+        }
+
+
+        /* =========================================================
+           CÉLULAS
+           ========================================================= */
+
+        td {
+            padding: 0.9rem 1rem;
+
+            border-bottom: 1px solid var(--almax-border);
+
+            color: var(--almax-text-primary);
+
+            font-size: 0.84rem;
+
+            vertical-align: middle;
+        }
+
+
+        tbody tr {
+            transition:
+                    background-color 0.15s ease;
+        }
+
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+
+        tbody tr:hover {
+            background-color: rgba(255, 255, 255, 0.025);
+        }
+
+
+        /* =========================================================
+           ID
+           ========================================================= */
+
+        .id {
+            color: var(--almax-accent);
+
+            font-family:
+                    'Consolas',
+                    'Courier New',
+                    monospace;
+
+            font-size: 0.78rem;
+
+            font-weight: 600;
+
+            white-space: nowrap;
+        }
+
+
+        /* =========================================================
+           NOME DO LEITOR
+           ========================================================= */
+
+        .reader-name {
+            display: flex;
+
+            align-items: center;
+
+            gap: 0.65rem;
+
+            min-width: 180px;
+        }
+
+
+        .reader-icon {
+            width: 32px;
+            height: 32px;
+
+            flex-shrink: 0;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background-color: var(--almax-accent-soft);
+
+            color: var(--almax-accent);
+
+            border: 1px solid rgba(255, 107, 0, 0.18);
+
+            border-radius: 6px;
+        }
+
+
+        .reader-icon svg {
+            width: 16px;
+            height: 16px;
+        }
+
+
+        .reader-name > span {
+            color: #D6D6D6;
+
+            font-size: 0.84rem;
+
+            font-weight: 500;
+        }
+
+
+        /* =========================================================
+           LOCALIZAÇÃO
+           ========================================================= */
+
+        .location {
+            display: inline-flex;
+
+            align-items: center;
+
+            min-height: 28px;
+
+            padding: 0.25rem 0.55rem;
+
+            background-color: #222222;
+
+            border: 1px solid var(--almax-border);
+
+            border-radius: 5px;
+
+            color: var(--almax-text-secondary);
+
+            font-size: 0.77rem;
+
+            white-space: nowrap;
+        }
+
+
+        /* =========================================================
+           STATUS
+           ========================================================= */
+
+        .status {
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 0.45rem;
+
+            min-height: 28px;
+
+            padding: 0.25rem 0.65rem;
+
+            border-radius: 999px;
+
+            font-size: 0.72rem;
+
+            font-weight: 600;
+
+            white-space: nowrap;
+        }
+
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+
+            border-radius: 50%;
+
+            flex-shrink: 0;
+        }
+
+
+        .status-online {
+            background-color: var(--almax-online-soft);
+
+            color: var(--almax-online);
+
+            border: 1px solid rgba(53, 199, 89, 0.18);
+        }
+
+
+        .status-online .status-dot {
+            background-color: var(--almax-online);
+
+            box-shadow:
+                    0 0 0 3px rgba(53, 199, 89, 0.08);
+        }
+
+
+        .status-offline {
+            background-color: var(--almax-offline-soft);
+
+            color: var(--almax-offline);
+
+            border: 1px solid rgba(231, 76, 60, 0.18);
+        }
+
+
+        .status-offline .status-dot {
+            background-color: var(--almax-offline);
+
+            box-shadow:
+                    0 0 0 3px rgba(231, 76, 60, 0.08);
+        }
+
+
+        /* =========================================================
+           AÇÕES
+           ========================================================= */
+
+        .actions {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: flex-end;
+
+            gap: 0.45rem;
+        }
+
+
+        .action {
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            min-height: 32px;
+
+            padding: 0.4rem 0.65rem;
+
+            border-radius: 5px;
+
+            text-decoration: none;
+
+            font-size: 0.73rem;
+
+            font-weight: 600;
+
+            border: 1px solid transparent;
+
+            transition:
+                    background-color 0.15s ease,
+                    border-color 0.15s ease,
+                    color 0.15s ease;
+        }
+
+
+        .action.edit {
+            background-color: var(--almax-accent-soft);
+
+            color: var(--almax-accent);
+
+            border-color: rgba(255, 107, 0, 0.16);
+        }
+
+
+        .action.edit:hover {
+            background-color: rgba(255, 107, 0, 0.18);
+
+            border-color: rgba(255, 107, 0, 0.30);
+        }
+
+
+        .action.delete {
+            background-color: rgba(231, 76, 60, 0.07);
+
+            color: #E74C3C;
+
+            border-color: rgba(231, 76, 60, 0.14);
+        }
+
+
+        .action.delete:hover {
+            background-color: rgba(231, 76, 60, 0.14);
+
+            border-color: rgba(231, 76, 60, 0.28);
+        }
+
+
+        /* =========================================================
+           ESTADO VAZIO
+           ========================================================= */
+
+        .empty-state {
+            min-height: 360px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            justify-content: center;
+
+            text-align: center;
+
+            padding: 3rem 2rem;
+
+            background-color: var(--almax-card);
+
+            border: 1px solid var(--almax-border);
+
+            border-radius: 8px;
+        }
+
+
+        .empty-icon {
+            width: 58px;
+            height: 58px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background-color: var(--almax-accent-soft);
+
+            color: var(--almax-accent);
+
+            border: 1px solid rgba(255, 107, 0, 0.18);
+
+            border-radius: 8px;
+
+            margin-bottom: 1rem;
+        }
+
+
+        .empty-icon svg {
+            width: 26px;
+            height: 26px;
+        }
+
+
+        .empty-state h2 {
+            color: var(--almax-text);
+
+            font-size: 1.15rem;
+
+            font-weight: 600;
+
+            margin-bottom: 0.4rem;
+        }
+
+
+        .empty-state p {
+            color: var(--almax-text-muted);
+
+            font-size: 0.84rem;
+
+            margin-bottom: 1.25rem;
+        }
+
+
+        /* =========================================================
+           ACESSIBILIDADE
+           ========================================================= */
+
+        *:focus-visible {
+            outline: 2px solid var(--almax-accent);
+
+            outline-offset: 2px;
+        }
+
+
+        /* =========================================================
+           RESPONSIVIDADE
+           ========================================================= */
+
+        @media (max-width: 800px) {
+
+            .container {
+                padding:
+                        1.5rem
+                        1rem
+                        2.5rem;
+            }
+
+
+            .page-header {
+                align-items: flex-start;
+
+                flex-direction: column;
+            }
+
+
+            .btn-primary {
+                width: 100%;
+            }
+
+        }
+
+
+        @media (max-width: 500px) {
+
+            .container {
+                padding:
+                        1.25rem
+                        0.75rem
+                        2rem;
+            }
+
+
+            .page-header {
+                padding: 1rem;
+            }
+
+
+            .header-info {
+                gap: 0.7rem;
+            }
+
+
+            .header-info .icon {
+                width: 38px;
+                height: 38px;
+            }
+
+
+            .header-info h1 {
+                font-size: 1.2rem;
+            }
+
+
+            .header-info p {
+                font-size: 0.80rem;
+            }
+
+
+            .empty-state {
+                min-height: 300px;
+
+                padding:
+                        2rem 1rem;
+            }
+
+        }
+
+
+        /* =========================================================
+           REDUÇÃO DE MOVIMENTO
+           ========================================================= */
+
+        @media (prefers-reduced-motion: reduce) {
+
+            .btn,
+            .action,
+            tbody tr {
+                transition: none;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     NAVBAR
+     ========================================================= -->
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+
+<!-- =========================================================
+     CONTEÚDO
+     ========================================================= -->
+
+<div class="container">
+
+
+    <!-- =====================================================
+         CABEÇALHO
+         ===================================================== -->
+
+    <header class="page-header">
+
+        <div class="header-info">
+
+
+            <!-- ÍCONE RFID -->
+
+            <div class="icon">
+
+                <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round">
+
+                    <rect
+                            x="3"
+                            y="7"
+                            width="5"
+                            height="10"
+                            rx="1"/>
+
+                    <path d="M12 9.5c1.4 1.4 1.4 3.6 0 5"/>
+
+                    <path d="M15 7c2.8 2.8 2.8 7.2 0 10"/>
+
+                    <path d="M18 4.5c4.2 4.2 4.2 10.8 0 15"/>
+
+                </svg>
+
+            </div>
+
+
+            <div>
+
+                <h1>
+                    Leitores RFID
+                </h1>
+
+                <p>
+                    Gerencie os leitores RFID do almoxarifado.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- NOVO LEITOR -->
+
+        <a
+                th:href="@{/leitor/form-cadastro}"
+                class="btn btn-primary">
+
+            <span>
+                +
+            </span>
+
+            Novo leitor
+
+        </a>
+
+    </header>
+
+
+    <!-- =====================================================
+         MENSAGEM
+         ===================================================== -->
+
+    <div
+            th:if="${mensagem}"
+            class="alert">
+
+        <span th:text="${mensagem}">
+            Mensagem
+        </span>
+
+    </div>
+
+
+    <!-- =====================================================
+         CONTEÚDO PRINCIPAL
+         ===================================================== -->
+
+    <main class="content">
+
+
+        <!-- =================================================
+             LEITORES CADASTRADOS
+             ================================================= -->
+
+        <div
+                th:if="${not #lists.isEmpty(leitores)}"
+                class="table-container">
+
+            <table>
+
+
+                <!-- =========================================
+                     CABEÇALHO
+                     ========================================= -->
+
+                <thead>
+
+                <tr>
+
+                    <th>
+                        ID
+                    </th>
+
+                    <th>
+                        Nome
+                    </th>
+
+                    <th>
+                        Localização
+                    </th>
+
+                    <th>
+                        Status
+                    </th>
+
+                    <th class="actions-column">
+                        Ações
+                    </th>
+
+                </tr>
+
+                </thead>
+
+
+                <!-- =========================================
+                     CORPO
+                     ========================================= -->
+
+                <tbody>
+
+                <tr
+                        th:each="leitor : ${leitores}">
+
+
+                    <!-- =====================================
+                         ID
+                         ===================================== -->
+
+                    <td>
+
+                        <span class="id">
+
+                            #
+
+                            <span th:text="${leitor.id}">
+                                1
+                            </span>
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- =====================================
+                         NOME
+                         ===================================== -->
+
+                    <td>
+
+                        <div class="reader-name">
+
+                            <div class="reader-icon">
+
+                                <svg
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="1.8"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round">
+
+                                    <rect
+                                            x="3"
+                                            y="7"
+                                            width="5"
+                                            height="10"
+                                            rx="1"/>
+
+                                    <path d="M12 9.5c1.4 1.4 1.4 3.6 0 5"/>
+
+                                    <path d="M15 7c2.8 2.8 2.8 7.2 0 10"/>
+
+                                </svg>
+
+                            </div>
+
+                            <span
+                                    th:text="${leitor.nome}">
+
+                                Leitor RFID
+
+                            </span>
+
+                        </div>
+
+                    </td>
+
+
+                    <!-- =====================================
+                         LOCALIZAÇÃO
+                         ===================================== -->
+
+                    <td>
+
+                        <span
+                                class="location"
+                                th:text="${leitor.localizacao}">
+
+                            Entrada
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- =====================================
+                         STATUS
+                         ===================================== -->
+
+                    <td>
+
+
+                        <!-- ONLINE -->
+
+                        <span
+                                th:if="${leitor.online}"
+                                class="status status-online">
+
+                            <span class="status-dot"></span>
+
+                            Online
+
+                        </span>
+
+
+                        <!-- OFFLINE -->
+
+                        <span
+                                th:unless="${leitor.online}"
+                                class="status status-offline">
+
+                            <span class="status-dot"></span>
+
+                            Offline
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- =====================================
+                         AÇÕES
+                         ===================================== -->
+
+                    <td>
+
+                        <div class="actions">
+
+
+                            <!-- EDITAR -->
+
+                            <a
+                                    th:href="@{/leitor/editar/{id}(id=${leitor.id})}"
+                                    class="action edit">
+
+                                Editar
+
+                            </a>
+
+
+                            <!-- EXCLUIR -->
+
+                            <a
+                                    th:href="@{/leitor/excluir/{id}(id=${leitor.id})}"
+                                    class="action delete"
+                                    onclick="return confirm('Tem certeza que deseja excluir este leitor?');">
+
+                                Excluir
+
+                            </a>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <!-- =================================================
+             ESTADO VAZIO
+             ================================================= -->
+
+        <div
+                th:if="${#lists.isEmpty(leitores)}"
+                class="empty-state">
+
+
+            <div class="empty-icon">
+
+                <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round">
+
+                    <rect
+                            x="3"
+                            y="7"
+                            width="5"
+                            height="10"
+                            rx="1"/>
+
+                    <path d="M12 9.5c1.4 1.4 1.4 3.6 0 5"/>
+
+                    <path d="M15 7c2.8 2.8 2.8 7.2 0 10"/>
+
+                    <path d="M18 4.5c4.2 4.2 4.2 10.8 0 15"/>
+
+                </svg>
+
+            </div>
+
+
+            <h2>
+                Nenhum leitor cadastrado
+            </h2>
+
+
+            <p>
+                Ainda não existem leitores RFID cadastrados.
+            </p>
+
+
+            <a
+                    th:href="@{/leitor/form-cadastro}"
+                    class="btn btn-primary">
+
+                Cadastrar primeiro leitor
+
+            </a>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<!-- =========================================================
+     FOOTER
+     ========================================================= -->
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+
+</body>
+
+</html>
