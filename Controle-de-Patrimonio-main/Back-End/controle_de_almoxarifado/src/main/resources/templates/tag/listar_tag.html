@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Almax - Tags RFID</title>
+
+    <style>
+
+        /* =========================================================
+           ALMAX - DESIGN SYSTEM
+           ========================================================= */
+
+        :root {
+            --almax-bg: #121212;
+            --almax-bg-elevated: #1A1A1A;
+            --almax-bg-card: #1C1C1C;
+
+            --almax-border: #262626;
+            --almax-border-hover: #3A3A3A;
+
+            --almax-accent: #FF6B00;
+            --almax-accent-hover: #E05E00;
+            --almax-accent-soft: rgba(255, 107, 0, 0.12);
+
+            --almax-text: #FFFFFF;
+            --almax-text-muted: #A8A8A8;
+            --almax-text-secondary: #7C7C7C;
+
+            --almax-success: #35C759;
+            --almax-success-soft: rgba(53, 199, 89, 0.12);
+
+            --almax-danger: #E74C3C;
+            --almax-danger-soft: rgba(231, 76, 60, 0.12);
+        }
+
+
+        /* =========================================================
+           RESET
+           ========================================================= */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        /* =========================================================
+           BODY
+           ========================================================= */
+
+        body {
+            background-color: var(--almax-bg);
+            color: var(--almax-text);
+
+            font-family:
+                    'Segoe UI',
+                    Tahoma,
+                    Geneva,
+                    Verdana,
+                    sans-serif;
+
+            min-height: 100vh;
+
+            display: flex;
+            flex-direction: column;
+        }
+
+
+        /* =========================================================
+           CONTAINER
+           ========================================================= */
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+
+            margin: 0 auto;
+
+            padding: 2rem 2rem 3rem;
+
+            flex: 1;
+        }
+
+
+        /* =========================================================
+           CABEÇALHO
+           ========================================================= */
+
+        .page-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 1.5rem;
+
+            background-color: var(--almax-bg-elevated);
+
+            padding: 1.25rem 1.4rem;
+
+            border: 1px solid var(--almax-border);
+            border-left: 4px solid var(--almax-accent);
+
+            border-radius: 8px;
+
+            margin-bottom: 1.5rem;
+
+            box-shadow:
+                    0 8px 24px rgba(0, 0, 0, 0.22);
+        }
+
+
+        /* =========================================================
+           INFORMAÇÕES DO CABEÇALHO
+           ========================================================= */
+
+        .header-info {
+            display: flex;
+            align-items: center;
+
+            gap: 0.85rem;
+
+            min-width: 0;
+        }
+
+
+        /* =========================================================
+           ÍCONE DO CABEÇALHO
+           ========================================================= */
+
+        .header-icon {
+            width: 42px;
+            height: 42px;
+
+            flex-shrink: 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            color: var(--almax-accent);
+
+            background-color: var(--almax-accent-soft);
+
+            border: 1px solid rgba(255, 107, 0, 0.18);
+
+            border-radius: 7px;
+        }
+
+        .header-icon svg {
+            width: 21px;
+            height: 21px;
+        }
+
+
+        /* =========================================================
+           TÍTULO
+           ========================================================= */
+
+        .header-info h1 {
+            color: var(--almax-text);
+
+            font-size: 1.35rem;
+            font-weight: 700;
+
+            line-height: 1.2;
+        }
+
+        .header-info p {
+            color: var(--almax-text-secondary);
+
+            font-size: 0.85rem;
+
+            margin-top: 0.3rem;
+
+            line-height: 1.4;
+        }
+
+
+        /* =========================================================
+           BOTÕES
+           ========================================================= */
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            gap: 0.45rem;
+
+            min-height: 38px;
+
+            padding: 0.55rem 0.9rem;
+
+            border-radius: 6px;
+
+            text-decoration: none;
+
+            font-size: 0.83rem;
+            font-weight: 600;
+
+            white-space: nowrap;
+
+            transition:
+                    background-color 0.15s ease,
+                    border-color 0.15s ease,
+                    color 0.15s ease,
+                    transform 0.15s ease;
+        }
+
+
+        .btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+
+        /* =========================================================
+           BOTÃO PRIMÁRIO
+           ========================================================= */
+
+        .btn-primary {
+            background-color: var(--almax-accent);
+
+            color: #121212;
+
+            border: 1px solid var(--almax-accent);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--almax-accent-hover);
+
+            border-color: var(--almax-accent-hover);
+
+            color: #FFFFFF;
+
+            transform: translateY(-1px);
+        }
+
+
+        /* =========================================================
+           ALERTA
+           ========================================================= */
+
+        .alert {
+            display: flex;
+            align-items: center;
+
+            gap: 0.65rem;
+
+            background-color: var(--almax-accent-soft);
+
+            border: 1px solid rgba(255, 107, 0, 0.35);
+
+            color: var(--almax-accent);
+
+            padding: 0.75rem 0.9rem;
+
+            border-radius: 6px;
+
+            margin-bottom: 1.25rem;
+
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .alert::before {
+            content: "";
+
+            width: 6px;
+            height: 6px;
+
+            flex-shrink: 0;
+
+            border-radius: 50%;
+
+            background-color: var(--almax-accent);
+        }
+
+
+        /* =========================================================
+           TABELA
+           ========================================================= */
+
+        .table-container {
+            background-color: var(--almax-bg-card);
+
+            border: 1px solid var(--almax-border);
+
+            border-radius: 8px;
+
+            overflow-x: auto;
+
+            box-shadow:
+                    0 8px 24px rgba(0, 0, 0, 0.18);
+        }
+
+
+        table {
+            width: 100%;
+
+            border-collapse: collapse;
+
+            text-align: left;
+        }
+
+
+        /* =========================================================
+           CABEÇALHO DA TABELA
+           ========================================================= */
+
+        th {
+            background-color: var(--almax-bg);
+
+            color: var(--almax-text-secondary);
+
+            padding: 0.85rem 1rem;
+
+            font-size: 0.72rem;
+            font-weight: 600;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.7px;
+
+            border-bottom: 1px solid var(--almax-border);
+
+            white-space: nowrap;
+        }
+
+        th:first-child {
+            color: var(--almax-accent);
+        }
+
+
+        /* =========================================================
+           CÉLULAS
+           ========================================================= */
+
+        td {
+            padding: 0.9rem 1rem;
+
+            border-bottom: 1px solid var(--almax-border);
+
+            color: #E0E0E0;
+
+            font-size: 0.87rem;
+
+            vertical-align: middle;
+        }
+
+
+        tbody tr {
+            transition:
+                    background-color 0.15s ease;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        tbody tr:hover {
+            background-color: rgba(255, 255, 255, 0.025);
+        }
+
+
+        /* =========================================================
+           ID
+           ========================================================= */
+
+        .id {
+            color: var(--almax-accent);
+
+            font-family: 'Consolas', 'Courier New', monospace;
+
+            font-size: 0.8rem;
+
+            font-weight: 600;
+
+            white-space: nowrap;
+        }
+
+
+        /* =========================================================
+           CÓDIGO DA TAG
+           ========================================================= */
+
+        .tag-code {
+            display: flex;
+            align-items: center;
+
+            gap: 0.55rem;
+
+            min-width: 220px;
+        }
+
+        .tag-code span:last-child {
+            color: #D6D6D6;
+
+            font-family:
+                    'Consolas',
+                    'Courier New',
+                    monospace;
+
+            font-size: 0.8rem;
+
+            letter-spacing: 0.2px;
+
+            word-break: break-all;
+        }
+
+
+        /* =========================================================
+           ÍCONE DA TAG
+           ========================================================= */
+
+        .tag-icon {
+            width: 30px;
+            height: 30px;
+
+            flex-shrink: 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            color: var(--almax-accent);
+
+            background-color: var(--almax-accent-soft);
+
+            border: 1px solid rgba(255, 107, 0, 0.15);
+
+            border-radius: 5px;
+        }
+
+        .tag-icon svg {
+            width: 15px;
+            height: 15px;
+        }
+
+
+        /* =========================================================
+           PRODUTO
+           ========================================================= */
+
+        .product {
+            display: flex;
+            align-items: center;
+
+            gap: 0.55rem;
+
+            min-width: 150px;
+        }
+
+        .product-icon {
+            width: 30px;
+            height: 30px;
+
+            flex-shrink: 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            color: var(--almax-text-muted);
+
+            background-color: #222222;
+
+            border: 1px solid var(--almax-border);
+
+            border-radius: 5px;
+        }
+
+        .product span {
+            color: #D6D6D6;
+
+            font-size: 0.85rem;
+        }
+
+
+        /* =========================================================
+           PRODUTO NÃO ASSOCIADO
+           ========================================================= */
+
+        .no-product {
+            display: inline-flex;
+            align-items: center;
+
+            color: var(--almax-text-secondary);
+
+            font-size: 0.82rem;
+            font-style: italic;
+        }
+
+
+        /* =========================================================
+           STATUS
+           ========================================================= */
+
+        .status {
+            display: inline-flex;
+            align-items: center;
+
+            gap: 0.4rem;
+
+            padding: 0.3rem 0.65rem;
+
+            border-radius: 999px;
+
+            font-size: 0.72rem;
+
+            font-weight: 600;
+
+            white-space: nowrap;
+        }
+
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+
+            border-radius: 50%;
+
+            flex-shrink: 0;
+        }
+
+
+        /* =========================================================
+           STATUS ATIVO
+           ========================================================= */
+
+        .status-active {
+            background-color: var(--almax-success-soft);
+
+            color: var(--almax-success);
+
+            border: 1px solid rgba(53, 199, 89, 0.18);
+        }
+
+        .status-active .status-dot {
+            background-color: var(--almax-success);
+
+            box-shadow:
+                    0 0 6px rgba(53, 199, 89, 0.45);
+        }
+
+
+        /* =========================================================
+           STATUS INATIVO
+           ========================================================= */
+
+        .status-inactive {
+            background-color: var(--almax-danger-soft);
+
+            color: var(--almax-danger);
+
+            border: 1px solid rgba(231, 76, 60, 0.18);
+        }
+
+        .status-inactive .status-dot {
+            background-color: var(--almax-danger);
+        }
+
+
+        /* =========================================================
+           AÇÕES
+           ========================================================= */
+
+        .actions {
+            display: flex;
+            align-items: center;
+
+            gap: 0.45rem;
+        }
+
+
+        .action {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            min-height: 32px;
+
+            padding: 0.35rem 0.7rem;
+
+            border-radius: 5px;
+
+            font-size: 0.75rem;
+            font-weight: 600;
+
+            text-decoration: none;
+
+            transition:
+                    background-color 0.15s ease,
+                    border-color 0.15s ease,
+                    color 0.15s ease,
+                    transform 0.15s ease;
+
+            white-space: nowrap;
+        }
+
+
+        /* =========================================================
+           EDITAR
+           ========================================================= */
+
+        .action.edit {
+            background-color: #222222;
+
+            color: var(--almax-text-muted);
+
+            border: 1px solid var(--almax-border);
+        }
+
+        .action.edit:hover {
+            background-color: var(--almax-accent-soft);
+
+            color: var(--almax-accent);
+
+            border-color: rgba(255, 107, 0, 0.4);
+
+            transform: translateY(-1px);
+        }
+
+
+        /* =========================================================
+           EXCLUIR
+           ========================================================= */
+
+        .action.delete {
+            background-color: var(--almax-danger-soft);
+
+            color: var(--almax-danger);
+
+            border: 1px solid rgba(231, 76, 60, 0.22);
+        }
+
+        .action.delete:hover {
+            background-color: var(--almax-danger);
+
+            color: #FFFFFF;
+
+            border-color: var(--almax-danger);
+
+            transform: translateY(-1px);
+        }
+
+
+        /* =========================================================
+           ESTADO VAZIO
+           ========================================================= */
+
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            text-align: center;
+
+            min-height: 350px;
+
+            padding: 3rem 2rem;
+
+            background-color: var(--almax-bg-card);
+
+            border: 1px solid var(--almax-border);
+
+            border-radius: 8px;
+        }
+
+
+        /* =========================================================
+           ÍCONE ESTADO VAZIO
+           ========================================================= */
+
+        .empty-icon {
+            width: 54px;
+            height: 54px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            color: var(--almax-accent);
+
+            background-color: var(--almax-accent-soft);
+
+            border: 1px solid rgba(255, 107, 0, 0.18);
+
+            border-radius: 8px;
+
+            margin-bottom: 1rem;
+        }
+
+        .empty-icon svg {
+            width: 25px;
+            height: 25px;
+        }
+
+
+        .empty-state h2 {
+            color: var(--almax-text);
+
+            font-size: 1.15rem;
+            font-weight: 600;
+
+            margin-bottom: 0.4rem;
+        }
+
+
+        .empty-state p {
+            color: var(--almax-text-secondary);
+
+            font-size: 0.85rem;
+
+            margin-bottom: 1.25rem;
+        }
+
+
+        /* =========================================================
+           FOCO / ACESSIBILIDADE
+           ========================================================= */
+
+        a:focus-visible {
+            outline: 2px solid var(--almax-accent);
+
+            outline-offset: 3px;
+        }
+
+
+        /* =========================================================
+           RESPONSIVIDADE
+           ========================================================= */
+
+        @media (max-width: 850px) {
+
+            .container {
+                padding:
+                        1.5rem
+                        1.25rem
+                        2.5rem;
+            }
+
+            .page-header {
+                align-items: flex-start;
+
+                flex-direction: column;
+            }
+
+            .btn-primary {
+                width: 100%;
+            }
+
+            .actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .action {
+                width: 100%;
+            }
+        }
+
+
+        @media (max-width: 600px) {
+
+            .container {
+                padding:
+                        1.25rem
+                        1rem
+                        2rem;
+            }
+
+            .page-header {
+                padding: 1.1rem;
+            }
+
+            .header-info h1 {
+                font-size: 1.2rem;
+            }
+
+            .header-info p {
+                font-size: 0.8rem;
+            }
+
+            .table-container {
+                border-radius: 7px;
+            }
+
+            th,
+            td {
+                padding: 0.75rem;
+            }
+        }
+
+
+        /* =========================================================
+           REDUÇÃO DE MOVIMENTO
+           ========================================================= */
+
+        @media (prefers-reduced-motion: reduce) {
+
+            tbody tr,
+            .btn,
+            .action {
+                transition: none;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+<!-- =========================================================
+     NAVBAR
+     ========================================================= -->
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+
+<!-- =========================================================
+     CONTEÚDO
+     ========================================================= -->
+
+<div class="container">
+
+
+    <!-- =====================================================
+         CABEÇALHO
+         ===================================================== -->
+
+    <header class="page-header">
+
+        <div class="header-info">
+
+            <div class="header-icon">
+
+                <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round">
+
+                    <path d="M12.5 3.5 L20 11 L12 19 L4.5 11.5 L4.5 3.5 Z"/>
+
+                    <circle
+                            cx="8.2"
+                            cy="7.3"
+                            r="1.15"
+                            fill="currentColor"
+                            stroke="none"/>
+
+                </svg>
+
+            </div>
+
+
+            <div>
+
+                <h1>Tags RFID</h1>
+
+                <p>
+                    Gerencie as Tags RFID associadas aos produtos.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <a
+                th:href="@{/tag/form-cadastro}"
+                class="btn btn-primary">
+
+            <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round">
+
+                <path d="M12 5 V19"/>
+                <path d="M5 12 H19"/>
+
+            </svg>
+
+            Nova Tag
+
+        </a>
+
+    </header>
+
+
+    <!-- =====================================================
+         MENSAGEM
+         ===================================================== -->
+
+    <div
+            th:if="${mensagem}"
+            class="alert">
+
+        <span th:text="${mensagem}">
+            Mensagem
+        </span>
+
+    </div>
+
+
+    <!-- =====================================================
+         CONTEÚDO
+         ===================================================== -->
+
+    <main class="content">
+
+
+        <!-- =================================================
+             TABELA
+             ================================================= -->
+
+        <div
+                th:if="${not #lists.isEmpty(tags)}"
+                class="table-container">
+
+            <table>
+
+                <thead>
+
+                <tr>
+
+                    <th>ID</th>
+
+                    <th>Código da Tag</th>
+
+                    <th>Produto</th>
+
+                    <th>Status</th>
+
+                    <th>Ações</th>
+
+                </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                <tr th:each="tag : ${tags}">
+
+
+                    <!-- ================================
+                         ID
+                         ================================= -->
+
+                    <td>
+
+                        <span
+                                class="id"
+                                th:text="'#' + ${tag.id}">
+
+                            #1
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- ================================
+                         CÓDIGO DA TAG
+                         ================================= -->
+
+                    <td>
+
+                        <div class="tag-code">
+
+                            <div class="tag-icon">
+
+                                <svg
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="1.8"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round">
+
+                                    <path d="M12.5 3.5 L20 11 L12 19 L4.5 11.5 L4.5 3.5 Z"/>
+
+                                    <circle
+                                            cx="8.2"
+                                            cy="7.3"
+                                            r="1.15"
+                                            fill="currentColor"
+                                            stroke="none"/>
+
+                                </svg>
+
+                            </div>
+
+                            <span th:text="${tag.codigoTag}">
+                                E2000017221101441890ABCD
+                            </span>
+
+                        </div>
+
+                    </td>
+
+
+                    <!-- ================================
+                         PRODUTO
+                         ================================= -->
+
+                    <td>
+
+                        <div
+                                th:if="${tag.produto != null}"
+                                class="product">
+
+                            <div class="product-icon">
+
+                                <svg
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="1.8"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round">
+
+                                    <path d="M3.5 7 L12 3 L20.5 7 L12 11 Z"/>
+                                    <path d="M3.5 7 L3.5 17 L12 21 L20.5 17 L20.5 7"/>
+                                    <path d="M12 11 L12 21"/>
+
+                                </svg>
+
+                            </div>
+
+                            <span th:text="${tag.produto.nome}">
+                                Produto
+                            </span>
+
+                        </div>
+
+
+                        <span
+                                th:unless="${tag.produto != null}"
+                                class="no-product">
+
+                            Sem produto associado
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- ================================
+                         STATUS
+                         ================================= -->
+
+                    <td>
+
+                        <span
+                                th:if="${tag.ativo}"
+                                class="status status-active">
+
+                            <span class="status-dot"></span>
+
+                            Ativa
+
+                        </span>
+
+
+                        <span
+                                th:unless="${tag.ativo}"
+                                class="status status-inactive">
+
+                            <span class="status-dot"></span>
+
+                            Inativa
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- ================================
+                         AÇÕES
+                         ================================= -->
+
+                    <td>
+
+                        <div class="actions">
+
+                            <a
+                                    th:href="@{/tag/editar/{id}(id=${tag.id})}"
+                                    class="action edit">
+
+                                Editar
+
+                            </a>
+
+
+                            <a
+                                    th:href="@{/tag/excluir/{id}(id=${tag.id})}"
+                                    class="action delete"
+                                    onclick="return confirm('Tem certeza que deseja excluir esta Tag RFID?');">
+
+                                Excluir
+
+                            </a>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <!-- =================================================
+             ESTADO VAZIO
+             ================================================= -->
+
+        <div
+                th:if="${#lists.isEmpty(tags)}"
+                class="empty-state">
+
+            <div class="empty-icon">
+
+                <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round">
+
+                    <path d="M12.5 3.5 L20 11 L12 19 L4.5 11.5 L4.5 3.5 Z"/>
+
+                    <circle
+                            cx="8.2"
+                            cy="7.3"
+                            r="1.15"
+                            fill="currentColor"
+                            stroke="none"/>
+
+                </svg>
+
+            </div>
+
+
+            <h2>
+                Nenhuma Tag RFID cadastrada
+            </h2>
+
+
+            <p>
+                Ainda não existem Tags RFID cadastradas no sistema.
+            </p>
+
+
+            <a
+                    th:href="@{/tag/form-cadastro}"
+                    class="btn btn-primary">
+
+                <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round">
+
+                    <path d="M12 5 V19"/>
+                    <path d="M5 12 H19"/>
+
+                </svg>
+
+                Cadastrar primeira Tag
+
+            </a>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<!-- =========================================================
+     FOOTER
+     ========================================================= -->
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="pt-BR"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Cadastro de Ambiente | ALMAX</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/ambiente.css}">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+</head>
+
+<body>
+
+<main class="page-container">
+
+    <!-- =====================================================
+         CABEÇALHO
+         ===================================================== -->
+
+    <header class="page-header">
+
+        <div class="page-title">
+
+            <div class="page-title-icon">
+                <i class="fas fa-building"></i>
+            </div>
+
+            <div>
+
+                <h1>Cadastro de Ambiente</h1>
+
+                <p>
+                    Cadastre e gerencie os ambientes do almoxarifado.
+                </p>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         FORMULÁRIO
+         ===================================================== -->
+
+    <form th:action="@{/ambiente/salvar}"
+          th:object="${ambiente}"
+          method="post"
+          class="environment-form dynamic-update-rows">
+
+        <!-- ID -->
+
+        <input type="hidden"
+               th:field="*{id}">
+
+
+        <!-- =================================================
+             DADOS DO AMBIENTE
+             ================================================= -->
+
+        <section class="form-section">
+
+            <div class="section-header">
+
+                <div class="section-icon">
+                    <i class="fas fa-building"></i>
+                </div>
+
+                <div>
+
+                    <h2>Informações do ambiente</h2>
+
+                    <p>
+                        Informe os dados básicos do ambiente.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-grid">
+
+                <!-- NOME -->
+
+                <div class="form-group">
+
+                    <label for="nome">
+                        Nome
+                        <span class="required">*</span>
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <i class="fas fa-signature"></i>
+
+                        <input
+                                type="text"
+                                id="nome"
+                                th:field="*{nome}"
+                                class="form-control"
+                                placeholder="Ex.: Almoxarifado Principal"
+                                autocomplete="off">
+
+                    </div>
+
+                </div>
+
+
+                <!-- LOCALIZAÇÃO -->
+
+                <div class="form-group">
+
+                    <label for="localizacao">
+                        Localização
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <i class="fas fa-location-dot"></i>
+
+                        <input
+                                type="text"
+                                id="localizacao"
+                                th:field="*{localizacao}"
+                                class="form-control"
+                                placeholder="Ex.: Bloco A - Sala 102"
+                                autocomplete="off">
+
+                    </div>
+
+                </div>
+
+
+                <!-- DESCRIÇÃO -->
+
+                <div class="form-group form-group-full">
+
+                    <label for="descricao">
+                        Descrição
+                    </label>
+
+                    <textarea
+                            id="descricao"
+                            th:field="*{descricao}"
+                            class="form-control textarea"
+                            rows="4"
+                            placeholder="Descreva o ambiente...">
+                    </textarea>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             PRODUTOS
+             ================================================= -->
+
+        <section class="form-section products-section">
+
+            <div class="products-header">
+
+                <div class="section-title">
+
+                    <div class="section-icon">
+                        <i class="fas fa-boxes-stacked"></i>
+                    </div>
+
+                    <div>
+                        <h2>Produtos</h2>
+                        <span>Produtos armazenados neste ambiente</span>
+                    </div>
+
+                </div>
+
+                <button
+                        type="button"
+                        name="addproduto"
+                        class="btn-add-product"
+                        th:attr="data-dynamic-update-rows-url=@{/ambiente/addproduto}">
+
+                    <i class="fas fa-plus"></i>
+
+                    Adicionar produto
+
+                </button>
+
+            </div>
+
+
+            <!-- =================================================
+                 TABELA
+                 ================================================= -->
+
+            <div class="table-container">
+
+                <table class="products-table">
+
+                    <thead>
+
+                    <tr>
+
+                        <th class="column-index">
+                            #
+                        </th>
+
+                        <th>
+                            Produto
+                        </th>
+
+                        <th>
+                            Descrição
+                        </th>
+
+                        <th>
+                            Categoria
+                        </th>
+
+                        <th>
+                            Patrimônio
+                        </th>
+
+                        <th>
+                            Localização
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th>
+                            Tag RFID
+                        </th>
+
+                        <th class="column-actions">
+                            Ações
+                        </th>
+
+                    </tr>
+
+                    </thead>
+
+                    <tbody id="dynamicTableContents"
+                           th:fragment="produtos">
+
+                    <tr th:each="produto, rowStat : ${ambiente.produtos}">
+
+                        <!-- ÍNDICE -->
+                        <td class="index-cell"
+                            th:text="${rowStat.count}">
+                            1
+                        </td>
+
+
+                        <!-- NOME -->
+                        <td>
+
+                            <input
+                                    type="text"
+                                    class="form-control"
+                                    th:field="${ambiente.produtos[__${rowStat.index}__].nome}"
+                                    placeholder="Nome">
+
+                        </td>
+
+
+                        <!-- DESCRIÇÃO -->
+                        <td>
+
+                            <input
+                                    type="text"
+                                    class="form-control"
+                                    th:field="${ambiente.produtos[__${rowStat.index}__].descricao}"
+                                    placeholder="Descrição">
+
+                        </td>
+
+
+                        <!-- CATEGORIA -->
+                        <td>
+
+                            <input
+                                    type="text"
+                                    class="form-control"
+                                    th:field="${ambiente.produtos[__${rowStat.index}__].categoria}"
+                                    placeholder="Categoria">
+
+                        </td>
+
+
+                        <!-- PATRIMÔNIO -->
+                        <td>
+
+                            <input
+                                    type="text"
+                                    class="form-control"
+                                    th:field="${ambiente.produtos[__${rowStat.index}__].codigoPatrimonio}"
+                                    placeholder="Patrimônio">
+
+                        </td>
+
+
+                        <!-- LOCALIZAÇÃO -->
+                        <td>
+
+                            <input
+                                    type="text"
+                                    class="form-control"
+                                    th:field="${ambiente.produtos[__${rowStat.index}__].localizacao}"
+                                    placeholder="Localização">
+
+                        </td>
+
+
+                        <!-- STATUS -->
+                        <td>
+
+                            <select
+                                    class="form-select"
+                                    th:field="${ambiente.produtos[__${rowStat.index}__].status}">
+
+                                <option value="">
+                                    Selecione
+                                </option>
+
+                                <option
+                                        th:each="status : ${T(sp.senai.org.controle_de_almoxarifado.model.enums.StatusProduto).values()}"
+                                        th:value="${status}"
+                                        th:text="${status}">
+                                </option>
+
+                            </select>
+
+                        </td>
+
+
+                        <!-- RFID -->
+                        <td>
+
+            <span
+                    th:if="${produto.tagRFID != null}"
+                    class="rfid-badge">
+
+                <i class="fas fa-wifi"></i>
+
+                Vinculada
+
+            </span>
+
+                            <span
+                                    th:unless="${produto.tagRFID != null}"
+                                    class="rfid-empty">
+
+                Sem tag
+
+            </span>
+
+                        </td>
+
+
+                        <!-- AÇÕES -->
+                        <td class="actions-cell">
+
+                            <button
+                                    type="button"
+                                    name="rmproduto"
+                                    class="btn btn-sm btn-danger"
+                                    th:value="${rowStat.index}"
+                                    th:attr="data-dynamic-update-rows-url=@{/ambiente/removeproduto}"
+                                    title="Remover produto">
+
+                                <i class="fas fa-trash"></i>
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+                    <!-- ESTADO VAZIO -->
+                    <tr th:if="${#lists.isEmpty(ambiente.produtos)}">
+
+                        <td colspan="9">
+
+                            <div class="empty-products">
+
+                                <i class="fas fa-box-open"></i>
+
+                                <strong>
+                                    Nenhum produto adicionado
+                                </strong>
+
+                                <span>
+                    Clique em "Adicionar produto" para cadastrar um produto.
+                </span>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    </tbody>
+
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             AÇÕES DO FORMULÁRIO
+             ================================================= -->
+
+        <footer class="form-actions">
+
+            <a
+                    th:href="@{/ambiente/listar}"
+                    class="btn btn-secondary">
+
+                <i class="fas fa-arrow-left"></i>
+
+                Voltar
+
+            </a>
+
+
+            <button
+                    type="submit"
+                    class="btn btn-primary">
+
+                <i class="fas fa-save"></i>
+
+                Salvar ambiente
+
+            </button>
+
+        </footer>
+
+    </form>
+
+</main>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+     ========================================================= -->
+
+<script>
+    $(document).ready(function () {
+
+        $('.dynamic-update-rows').on(
+            'click',
+            'button[data-dynamic-update-rows-url]',
+            function () {
+
+                const button = $(this);
+
+                const url =
+                    button.data('dynamic-update-rows-url');
+
+                const form =
+                    button.closest('form');
+
+                const formData =
+                    form.serializeArray();
+
+                formData.push({
+                    name: button.attr('name'),
+                    value: button.val() || ''
+                });
+
+                $.ajax({
+
+                    url: url,
+
+                    type: 'POST',
+
+                    data: formData,
+
+                    success: function (html) {
+
+                        $('#dynamicTableContents')
+                            .html(html);
+
+                    },
+
+                    error: function (xhr) {
+
+                        console.error(
+                            'Erro ao atualizar produtos:',
+                            xhr.responseText
+                        );
+
+                        alert(
+                            'Não foi possível atualizar os produtos.'
+                        );
+                    }
+
+                });
+
+            }
+        );
+
+    });
+
+    $(document).ready(function () {
+
+        $(document).on(
+            'click',
+            'button[data-dynamic-update-rows-url]',
+            function (event) {
+
+                event.preventDefault();
+
+                const button = $(this);
+
+                const url =
+                    button.attr('data-dynamic-update-rows-url');
+
+                const form =
+                    button.closest('form');
+
+                if (!form.length) {
+
+                    console.error(
+                        'Formulário do ambiente não encontrado.'
+                    );
+
+                    return;
+                }
+
+                const formData =
+                    form.serializeArray();
+
+                formData.push({
+                    name: 'name',
+                    value: button.attr('name')
+                });
+
+                formData.push({
+                    name: 'value',
+                    value: button.val() || ''
+                });
+
+
+                button.prop('disabled', true);
+
+
+                $.ajax({
+
+                    url: url,
+
+                    type: 'POST',
+
+                    data: formData,
+
+                    success: function (html) {
+
+                        $('#dynamicTableContents')
+                            .replaceWith(html);
+
+                    },
+
+                    error: function (xhr) {
+
+                        console.error(
+                            'Erro AJAX'
+                        );
+
+                        console.error(
+                            'HTTP:',
+                            xhr.status
+                        );
+
+                        console.error(
+                            'URL:',
+                            url
+                        );
+
+                        console.error(
+                            'Resposta:',
+                            xhr.responseText
+                        );
+
+                        alert(
+                            'Não foi possível atualizar os produtos.'
+                        );
+
+                    },
+
+                    complete: function () {
+
+                        button.prop(
+                            'disabled',
+                            false
+                        );
+
+                    }
+
+                });
+
+            }
+        );
+
+    });
+</script>
+
+</body>
+</html>

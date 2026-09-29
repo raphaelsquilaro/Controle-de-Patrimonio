@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="pt-BR"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Ambientes | ALMAX</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/ambiente-lista.css}">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+
+<body>
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<main class="page-container">
+
+    <!-- =====================================================
+         CABEÇALHO
+         ===================================================== -->
+
+    <header class="page-header">
+
+        <div class="page-title">
+
+            <div class="page-title-icon">
+
+                <i class="fas fa-building"></i>
+
+            </div>
+
+            <div>
+
+                <h1>Ambientes</h1>
+
+                <p>
+                    Gerencie os ambientes cadastrados no almoxarifado.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <a th:href="@{/ambiente/form-cadastro}"
+           class="btn-primary">
+
+            <i class="fas fa-plus"></i>
+
+            Novo ambiente
+
+        </a>
+
+    </header>
+
+
+    <!-- =====================================================
+         RESUMO
+         ===================================================== -->
+
+    <section class="summary-grid">
+
+        <!-- TOTAL -->
+
+        <div class="summary-card">
+
+            <div class="summary-icon">
+
+                <i class="fas fa-building"></i>
+
+            </div>
+
+            <div class="summary-content">
+
+                <span>Total de ambientes</span>
+
+                <strong th:text="${#lists.size(ambientes)}">
+                    0
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- PRODUTOS -->
+
+        <div class="summary-card">
+
+            <div class="summary-icon">
+
+                <i class="fas fa-boxes-stacked"></i>
+
+            </div>
+
+            <div class="summary-content">
+
+                <span>Ambientes cadastrados</span>
+
+                <strong th:text="${#lists.size(ambientes)}">
+                    0
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- STATUS -->
+
+        <div class="summary-card">
+
+            <div class="summary-icon success">
+
+                <i class="fas fa-check"></i>
+
+            </div>
+
+            <div class="summary-content">
+
+                <span>Situação</span>
+
+                <strong>Ativos</strong>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         LISTAGEM
+         ===================================================== -->
+
+    <section class="content-card">
+
+        <!-- CABEÇALHO DA LISTAGEM -->
+
+        <div class="content-header">
+
+            <div>
+
+                <h2>
+
+                    <i class="fas fa-list"></i>
+
+                    Ambientes cadastrados
+
+                </h2>
+
+                <p>
+                    Consulte, edite ou remova os ambientes do sistema.
+                </p>
+
+            </div>
+
+
+            <!-- BUSCA -->
+
+            <div class="search-wrapper">
+
+                <i class="fas fa-search"></i>
+
+                <input
+                        type="search"
+                        id="searchAmbiente"
+                        placeholder="Buscar ambiente..."
+                        autocomplete="off">
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             TABELA
+             ================================================= -->
+
+        <div class="table-wrapper">
+
+            <table class="ambientes-table"
+                   id="ambientesTable">
+
+                <thead>
+
+                <tr>
+
+                    <th class="column-id">
+                        #
+                    </th>
+
+                    <th>
+                        Ambiente
+                    </th>
+
+                    <th>
+                        Localização
+                    </th>
+
+                    <th>
+                        Descrição
+                    </th>
+
+                    <th class="column-products">
+                        Produtos
+                    </th>
+
+                    <th class="column-actions">
+                        Ações
+                    </th>
+
+                </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                <!-- =========================================
+                     AMBIENTES
+                     ========================================= -->
+
+                <tr th:each="ambiente : ${ambientes}">
+
+                    <!-- ID -->
+
+                    <td class="id-cell"
+                        th:text="${ambiente.id}">
+
+                        1
+
+                    </td>
+
+
+                    <!-- NOME -->
+
+                    <td>
+
+                        <div class="environment-name">
+
+                            <div class="environment-icon">
+
+                                <i class="fas fa-building"></i>
+
+                            </div>
+
+                            <div>
+
+                                <strong
+                                        th:text="${ambiente.nome}">
+                                    Almoxarifado Principal
+                                </strong>
+
+                                <span>
+                                    Ambiente cadastrado
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </td>
+
+
+                    <!-- LOCALIZAÇÃO -->
+
+                    <td>
+
+                        <div class="location-cell">
+
+                            <i class="fas fa-location-dot"></i>
+
+                            <span
+                                    th:text="${ambiente.localizacao != null
+                                    && !#strings.isEmpty(ambiente.localizacao)
+                                    ? ambiente.localizacao
+                                    : 'Não informada'}">
+
+                                Bloco A - Sala 102
+
+                            </span>
+
+                        </div>
+
+                    </td>
+
+
+                    <!-- DESCRIÇÃO -->
+
+                    <td>
+
+                        <div class="description-cell"
+                             th:title="${ambiente.descricao}"
+                             th:text="${ambiente.descricao != null
+                             && !#strings.isEmpty(ambiente.descricao)
+                             ? ambiente.descricao
+                             : 'Sem descrição'}">
+
+                            Ambiente principal para armazenamento.
+
+                        </div>
+
+                    </td>
+
+
+                    <!-- PRODUTOS -->
+
+                    <td class="products-cell">
+
+                        <span class="product-badge">
+
+                            <i class="fas fa-box"></i>
+
+                            <span
+                                    th:text="${ambiente.produtos != null
+                                    ? #lists.size(ambiente.produtos)
+                                    : 0}">
+                                0
+                            </span>
+
+                            produto(s)
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- AÇÕES -->
+
+                    <td class="actions-cell">
+
+                        <!-- EDITAR -->
+
+                        <a
+                                th:href="@{/ambiente/editar/{id}(id=${ambiente.id})}"
+                                class="action-button edit"
+                                title="Editar ambiente">
+
+                            <i class="fas fa-pen"></i>
+
+                        </a>
+
+
+                        <!-- EXCLUIR -->
+
+                        <a
+                                th:href="@{/ambiente/excluir/{id}(id=${ambiente.id})}"
+                                class="action-button delete"
+                                title="Excluir ambiente"
+                                onclick="return confirm(
+                                    'Deseja realmente excluir este ambiente?'
+                                );">
+
+                            <i class="fas fa-trash"></i>
+
+                        </a>
+
+                    </td>
+
+                </tr>
+
+
+                <!-- =========================================
+                     ESTADO VAZIO
+                     ========================================= -->
+
+                <tr th:if="${#lists.isEmpty(ambientes)}"
+                    id="emptyRow">
+
+                    <td colspan="6">
+
+                        <div class="empty-state">
+
+                            <div class="empty-icon">
+
+                                <i class="fas fa-building-circle-xmark"></i>
+
+                            </div>
+
+                            <h3>
+                                Nenhum ambiente cadastrado
+                            </h3>
+
+                            <p>
+                                Comece cadastrando o primeiro ambiente
+                                do almoxarifado.
+                            </p>
+
+                            <a
+                                    th:href="@{/ambiente/form-cadastro}"
+                                    class="btn-primary">
+
+                                <i class="fas fa-plus"></i>
+
+                                Cadastrar ambiente
+
+                            </a>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         RODAPÉ
+         ===================================================== -->
+
+    <footer class="page-footer">
+
+        <span>
+            ALMAX — Controle de Almoxarifado
+        </span>
+
+        <span>
+            Ambientes
+        </span>
+
+    </footer>
+
+</main>
+
+
+<!-- =========================================================
+     JAVASCRIPT — BUSCA
+     ========================================================= -->
+
+<script>
+
+    const searchInput =
+        document.getElementById('searchAmbiente');
+
+    const table =
+        document.getElementById('ambientesTable');
+
+
+    if (searchInput && table) {
+
+        searchInput.addEventListener(
+            'input',
+            function () {
+
+                const search =
+                    this.value
+                        .toLowerCase()
+                        .trim();
+
+                const rows =
+                    table.querySelectorAll(
+                        'tbody tr:not(#emptyRow)'
+                    );
+
+
+                rows.forEach(function (row) {
+
+                    const text =
+                        row.textContent
+                            .toLowerCase();
+
+                    row.style.display =
+                        text.includes(search)
+                            ? ''
+                            : 'none';
+
+                });
+
+            }
+        );
+
+    }
+
+</script>
+
+</body>
+
+</html>

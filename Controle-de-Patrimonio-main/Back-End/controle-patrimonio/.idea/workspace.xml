@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="f4c29454-e5eb-4d41-acfc-09178fb28625" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../controle_de_almoxarifado/src/main/java/sp/senai/org/controle_de_almoxarifado/controller/AmbienteController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../controle_de_almoxarifado/src/main/java/sp/senai/org/controle_de_almoxarifado/model/Ambiente.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../controle_de_almoxarifado/src/main/java/sp/senai/org/controle_de_almoxarifado/repository/AmbienteRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../controle_de_almoxarifado/src/main/resources/static/css/ambiente-lista.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../controle_de_almoxarifado/src/main/resources/static/css/ambiente.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../controle_de_almoxarifado/src/main/resources/static/css/cadastro-usuario.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../controle_de_almoxarifado/src/main/resources/static/css/user.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../controle_de_almoxarifado/src/main/resources/templates/ambiente/cadastro_ambiente.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../controle_de_almoxarifado/src/main/resources/templates/ambiente/listar_ambiente.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../controle_de_almoxarifado/src/main/java/sp/senai/org/controle_de_almoxarifado/controller/EstoqueController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../controle_de_almoxarifado/src/main/java/sp/senai/org/controle_de_almoxarifado/model/Estoque.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../controle_de_almoxarifado/src/main/java/sp/senai/org/controle_de_almoxarifado/model/Movimentacao.java" beforeDir="false" afterPath="$PROJECT_DIR$/../controle_de_almoxarifado/src/main/java/sp/senai/org/controle_de_almoxarifado/model/Movimentacao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../controle_de_almoxarifado/src/main/java/sp/senai/org/controle_de_almoxarifado/model/Produto.java" beforeDir="false" afterPath="$PROJECT_DIR$/../controle_de_almoxarifado/src/main/java/sp/senai/org/controle_de_almoxarifado/model/Produto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../controle_de_almoxarifado/src/main/java/sp/senai/org/controle_de_almoxarifado/model/Usuario.java" beforeDir="false" afterPath="$PROJECT_DIR$/../controle_de_almoxarifado/src/main/java/sp/senai/org/controle_de_almoxarifado/model/Usuario.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../controle_de_almoxarifado/src/main/java/sp/senai/org/controle_de_almoxarifado/repository/EstoqueRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../controle_de_almoxarifado/src/main/java/sp/senai/org/controle_de_almoxarifado/service/MovimentacaoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../controle_de_almoxarifado/src/main/java/sp/senai/org/controle_de_almoxarifado/service/MovimentacaoService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../controle_de_almoxarifado/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../controle_de_almoxarifado/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../controle_de_almoxarifado/src/main/resources/static/cadastro-produto.css" beforeDir="false" afterPath="$PROJECT_DIR$/../controle_de_almoxarifado/src/main/resources/static/css/cadastro-produto.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../controle_de_almoxarifado/src/main/resources/static/cadastro-tag.css" beforeDir="false" afterPath="$PROJECT_DIR$/../controle_de_almoxarifado/src/main/resources/static/css/cadastro-tag.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../controle_de_almoxarifado/src/main/resources/static/cadastro-usuario.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../controle_de_almoxarifado/src/main/resources/static/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/../controle_de_almoxarifado/src/main/resources/static/css/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../controle_de_almoxarifado/src/main/resources/static/leitor-rfid.css" beforeDir="false" afterPath="$PROJECT_DIR$/../controle_de_almoxarifado/src/main/resources/static/css/leitor-rfid.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../controle_de_almoxarifado/src/main/resources/static/listar-leitor.css" beforeDir="false" afterPath="$PROJECT_DIR$/../controle_de_almoxarifado/src/main/resources/static/css/listar-leitor.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../controle_de_almoxarifado/src/main/resources/static/listar-movimentacao.css" beforeDir="false" afterPath="$PROJECT_DIR$/../controle_de_almoxarifado/src/main/resources/static/css/listar-movimentacao.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../controle_de_almoxarifado/src/main/resources/static/listar-produto.css" beforeDir="false" afterPath="$PROJECT_DIR$/../controle_de_almoxarifado/src/main/resources/static/css/listar-produto.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../controle_de_almoxarifado/src/main/resources/static/listar-tag.css" beforeDir="false" afterPath="$PROJECT_DIR$/../controle_de_almoxarifado/src/main/resources/static/css/listar-tag.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../controle_de_almoxarifado/src/main/resources/static/listar-usuario.css" beforeDir="false" afterPath="$PROJECT_DIR$/../controle_de_almoxarifado/src/main/resources/static/css/listar-usuario.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../controle_de_almoxarifado/src/main/resources/static/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/../controle_de_almoxarifado/src/main/resources/static/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../controle_de_almoxarifado/src/main/resources/templates/estoque/cadastro_estoque.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../controle_de_almoxarifado/src/main/resources/templates/estoque/listar_estoque.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../controle_de_almoxarifado/src/main/resources/templates/fragments/navbar.html" beforeDir="false" afterPath="$PROJECT_DIR$/../controle_de_almoxarifado/src/main/resources/templates/fragments/navbar.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../controle_de_almoxarifado/src/main/resources/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../controle_de_almoxarifado/src/main/resources/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../controle_de_almoxarifado/src/main/resources/templates/produto/cadastro_produto.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../controle_de_almoxarifado/src/main/resources/templates/produto/listar_produto.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../controle_de_almoxarifado/src/main/resources/templates/usuario/cadastro_usuario.html" beforeDir="false" afterPath="$PROJECT_DIR$/../controle_de_almoxarifado/src/main/resources/templates/usuario/cadastro_usuario.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../controle_de_almoxarifado/src/main/resources/templates/usuario/listar_usuario.html" beforeDir="false" afterPath="$PROJECT_DIR$/../controle_de_almoxarifado/src/main/resources/templates/usuario/listar_usuario.html" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CopilotPersistence">
+    <persistenceIdMap>
+      <entry key="_C:/Users/TIDEV41/Documents/tcc/Controle-de-Patrimonio/Controle-de-Patrimonio-main/Controle-de-Patrimonio-main/Back-End/controle-patrimonio" value="3Jh6jdsm2L1rj0k91WRs61nkupP" />
+    </persistenceIdMap>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+        <option value="Enum" />
+        <option value="Interface" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../.." />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7,
+  &quot;fromUser&quot;: false
+}</component>
+  <component name="ProjectId" id="3Jh6jdsm2L1rj0k91WRs61nkupP" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RunManager">
+    <configuration name="ControlePatrimonioApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="controle-patrimonio" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="sp.senai.org.controlepatrimonio.ControlePatrimonioApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f4c29454-e5eb-4d41-acfc-09178fb28625" name="Changes" comment="" />
+      <created>1790101089523</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1790101089523</updated>
+      <workItem from="1790101093610" duration="1173000" />
+      <workItem from="1790179065551" duration="30000" />
+      <workItem from="1790610207806" duration="1063000" />
+      <workItem from="1790677421665" duration="171000" />
+      <workItem from="1790677621994" duration="10000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="github-copilot-workspace">
+    <instructionFileLocations>
+      <option value=".github/instructions" />
+    </instructionFileLocations>
+    <promptFileLocations>
+      <option value=".github/prompts" />
+    </promptFileLocations>
+  </component>
+</project>

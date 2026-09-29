@@ -1,0 +1,679 @@
+:root {
+    --almax-bg: #121212;
+    --almax-bg-elevated: #1a1a1a;
+    --almax-bg-card: #1c1c1c;
+
+    --almax-border: #2a2a2a;
+    --almax-border-hover: #3a3a3a;
+
+    --almax-accent: #ff6b00;
+    --almax-accent-hover: #e05e00;
+    --almax-accent-soft: rgba(255, 107, 0, 0.10);
+
+    --almax-text: #ffffff;
+    --almax-text-muted: #a8a8a8;
+    --almax-text-secondary: #7c7c7c;
+
+    --almax-danger: #ff4d4f;
+    --almax-danger-soft: rgba(255, 77, 79, 0.10);
+}
+
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+/* =========================================================
+   BODY
+   ========================================================= */
+
+body {
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 2rem 1rem;
+
+    background:
+            radial-gradient(
+                    circle at top left,
+                    rgba(255, 107, 0, 0.06),
+                    transparent 30%
+            ),
+            var(--almax-bg);
+
+    color: var(--almax-text);
+
+    font-family:
+            "Segoe UI",
+            Tahoma,
+            Geneva,
+            Verdana,
+            sans-serif;
+}
+
+
+/* =========================================================
+   CONTAINER
+   ========================================================= */
+
+.container {
+    width: 100%;
+    max-width: 680px;
+
+    margin: 0 auto;
+}
+
+
+/* =========================================================
+   CARD
+   ========================================================= */
+
+.card {
+    position: relative;
+
+    width: 100%;
+
+    padding: 2rem;
+
+    background-color: var(--almax-bg-card);
+
+    border: 1px solid var(--almax-border);
+    border-radius: 12px;
+
+    box-shadow:
+            0 20px 50px rgba(0, 0, 0, 0.35),
+            0 0 0 1px rgba(255, 107, 0, 0.02);
+
+    overflow: hidden;
+}
+
+
+/*
+ * Barra superior de destaque
+ */
+
+.card::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 3px;
+
+    background: var(--almax-accent);
+}
+
+
+/* =========================================================
+   CABEÇALHO
+   ========================================================= */
+
+.card-header {
+    display: flex;
+    align-items: center;
+
+    gap: 1rem;
+
+    padding-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
+
+    border-bottom: 1px solid var(--almax-border);
+}
+
+
+/* =========================================================
+   ÍCONE
+   ========================================================= */
+
+.icon {
+    width: 52px;
+    height: 52px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: var(--almax-accent-soft);
+
+    border: 1px solid rgba(255, 107, 0, 0.18);
+
+    border-radius: 10px;
+
+    color: var(--almax-accent);
+
+    font-size: 1.45rem;
+
+    transition:
+            background-color 0.18s ease,
+            transform 0.18s ease;
+}
+
+.card:hover .icon {
+    background-color: rgba(255, 107, 0, 0.15);
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   TÍTULO
+   ========================================================= */
+
+.card-header h1 {
+    color: var(--almax-text);
+
+    font-size: 1.45rem;
+    font-weight: 700;
+
+    line-height: 1.25;
+
+    margin-bottom: 0.35rem;
+}
+
+
+/* =========================================================
+   SUBTÍTULO
+   ========================================================= */
+
+.card-header p {
+    color: var(--almax-text-secondary);
+
+    font-size: 0.88rem;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   FORMULÁRIO
+   ========================================================= */
+
+form {
+    width: 100%;
+}
+
+
+/* =========================================================
+   FORM GROUP
+   ========================================================= */
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+
+    margin-bottom: 1.25rem;
+}
+
+
+/* =========================================================
+   LABEL
+   ========================================================= */
+
+.form-group label {
+    margin-bottom: 0.5rem;
+
+    color: var(--almax-text);
+
+    font-size: 0.87rem;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   INPUTS E SELECT
+   ========================================================= */
+
+.form-group input,
+.form-group select {
+    width: 100%;
+
+    min-height: 44px;
+
+    padding: 0.7rem 0.85rem;
+
+    background-color: var(--almax-bg-elevated);
+
+    border: 1px solid var(--almax-border);
+    border-radius: 7px;
+
+    outline: none;
+
+    color: var(--almax-text);
+
+    font-family: inherit;
+    font-size: 0.9rem;
+
+    transition:
+            border-color 0.15s ease,
+            background-color 0.15s ease,
+            box-shadow 0.15s ease;
+}
+
+
+/* =========================================================
+   PLACEHOLDER
+   ========================================================= */
+
+.form-group input::placeholder {
+    color: #626262;
+}
+
+
+/* =========================================================
+   FOCUS
+   ========================================================= */
+
+.form-group input:focus,
+.form-group select:focus {
+    background-color: #202020;
+
+    border-color: var(--almax-accent);
+
+    box-shadow:
+            0 0 0 3px rgba(255, 107, 0, 0.10);
+}
+
+
+/* =========================================================
+   SELECT
+   ========================================================= */
+
+.form-group select {
+    cursor: pointer;
+
+    appearance: none;
+
+    background-image:
+            linear-gradient(45deg, transparent 50%, #888 50%),
+            linear-gradient(135deg, #888 50%, transparent 50%);
+
+    background-position:
+            calc(100% - 18px) 19px,
+            calc(100% - 13px) 19px;
+
+    background-size:
+            5px 5px,
+            5px 5px;
+
+    background-repeat: no-repeat;
+
+    padding-right: 2.5rem;
+}
+
+
+/* =========================================================
+   OPTIONS
+   ========================================================= */
+
+.form-group select option {
+    background-color: var(--almax-bg-elevated);
+
+    color: var(--almax-text);
+}
+
+
+/* =========================================================
+   TEXTO DE AJUDA
+   ========================================================= */
+
+.help-text {
+    margin-top: 0.45rem;
+
+    color: var(--almax-text-secondary);
+
+    font-size: 0.76rem;
+
+    line-height: 1.45;
+}
+
+
+/* =========================================================
+   ERROS DE VALIDAÇÃO
+   ========================================================= */
+
+.error {
+    display: block;
+
+    margin-top: 0.45rem;
+
+    padding: 0.5rem 0.65rem;
+
+    background-color: var(--almax-danger-soft);
+
+    border-left: 3px solid var(--almax-danger);
+
+    border-radius: 4px;
+
+    color: #ff7779;
+
+    font-size: 0.78rem;
+}
+
+
+/* =========================================================
+   INPUT COM ERRO
+   ========================================================= */
+
+.form-group input:invalid:not(:placeholder-shown),
+.form-group select:invalid {
+    border-color: rgba(255, 77, 79, 0.45);
+}
+
+
+/* =========================================================
+   INFO BOX
+   ========================================================= */
+
+.info-box {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 0.8rem;
+
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+
+    padding: 0.9rem 1rem;
+
+    background-color: var(--almax-accent-soft);
+
+    border: 1px solid rgba(255, 107, 0, 0.16);
+
+    border-radius: 8px;
+}
+
+
+/* =========================================================
+   ÍCONE INFO
+   ========================================================= */
+
+.info-icon {
+    width: 24px;
+    height: 24px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: var(--almax-accent);
+
+    border-radius: 50%;
+
+    color: #121212;
+
+    font-size: 0.75rem;
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   TEXTO INFO
+   ========================================================= */
+
+.info-box strong {
+    display: block;
+
+    margin-bottom: 0.25rem;
+
+    color: var(--almax-text);
+
+    font-size: 0.82rem;
+}
+
+
+.info-box p {
+    color: var(--almax-text-muted);
+
+    font-size: 0.77rem;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   AÇÕES
+   ========================================================= */
+
+.form-actions {
+    display: flex;
+
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 0.75rem;
+
+    padding-top: 1.25rem;
+
+    border-top: 1px solid var(--almax-border);
+}
+
+
+/* =========================================================
+   BOTÃO BASE
+   ========================================================= */
+
+.btn {
+    min-height: 42px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0.65rem 1.1rem;
+
+    border-radius: 7px;
+
+    font-family: inherit;
+
+    font-size: 0.84rem;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition:
+            background-color 0.15s ease,
+            border-color 0.15s ease,
+            color 0.15s ease,
+            transform 0.15s ease,
+            box-shadow 0.15s ease;
+}
+
+
+/* =========================================================
+   BOTÃO CANCELAR
+   ========================================================= */
+
+.btn-cancelar {
+    background-color: transparent;
+
+    border: 1px solid var(--almax-border);
+
+    color: var(--almax-text-muted);
+}
+
+
+.btn-cancelar:hover {
+    background-color: var(--almax-bg-elevated);
+
+    border-color: var(--almax-border-hover);
+
+    color: var(--almax-text);
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   BOTÃO SALVAR
+   ========================================================= */
+
+.btn-salvar {
+    background-color: var(--almax-accent);
+
+    border: 1px solid var(--almax-accent);
+
+    color: #121212;
+
+    box-shadow:
+            0 4px 12px rgba(255, 107, 0, 0.15);
+}
+
+
+.btn-salvar:hover {
+    background-color: var(--almax-accent-hover);
+
+    border-color: var(--almax-accent-hover);
+
+    color: #ffffff;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+            0 6px 16px rgba(255, 107, 0, 0.22);
+}
+
+
+.btn-salvar:active,
+.btn-cancelar:active {
+    transform: translateY(0);
+}
+
+
+/* =========================================================
+   ACESSIBILIDADE
+   ========================================================= */
+
+input:focus-visible,
+select:focus-visible,
+button:focus-visible,
+a:focus-visible {
+    outline: 2px solid var(--almax-accent);
+
+    outline-offset: 3px;
+}
+
+
+/* =========================================================
+   RESPONSIVIDADE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    body {
+        align-items: flex-start;
+
+        padding:
+                1rem
+                0.75rem;
+    }
+
+
+    .container {
+        max-width: 100%;
+    }
+
+
+    .card {
+        padding: 1.35rem;
+
+        border-radius: 10px;
+    }
+
+
+    .card-header {
+        align-items: flex-start;
+
+        gap: 0.75rem;
+    }
+
+
+    .icon {
+        width: 44px;
+        height: 44px;
+
+        font-size: 1.2rem;
+    }
+
+
+    .card-header h1 {
+        font-size: 1.2rem;
+    }
+
+
+    .card-header p {
+        font-size: 0.8rem;
+    }
+
+
+    .form-actions {
+        flex-direction: column-reverse;
+
+        align-items: stretch;
+    }
+
+
+    .btn {
+        width: 100%;
+    }
+}
+
+
+/* =========================================================
+   TELAS MUITO PEQUENAS
+   ========================================================= */
+
+@media (max-width: 380px) {
+
+    body {
+        padding: 0.5rem;
+    }
+
+
+    .card {
+        padding: 1rem;
+    }
+
+
+    .card-header {
+        flex-direction: column;
+    }
+
+
+    .info-box {
+        padding: 0.8rem;
+    }
+}
+
+
+/* =========================================================
+   REDUÇÃO DE MOVIMENTO
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .icon,
+    .form-group input,
+    .form-group select,
+    .btn {
+        transition: none;
+    }
+}
